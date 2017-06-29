@@ -1,0 +1,61 @@
+---
+title: "APPENDIX B: Investigation into quality of OpencellID data"
+output: html_notebook
+---
+
+This notebook follows along the APPENDIX B produced for the publication "Comparing the density of mobile phone cell towers with population" part of the [ONS Methodology Working Paper Series]()
+
+The relationship between official estimates of UK residential and [workday population](https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/articles/theworkdaypopulationofenglandandwales/2013-10-31#data)<sup>1</sup> density and the density of mobile phone cell-towers is investigated using freely available and open-sourced data on cell-tower locations from [OpenCellID](https://opencellid.org/).
+
+Each cell tower in the OpenCellID database has a timestamp representing the date/time the cell tower was first registered and the latest measurement. 
+
+Data from the OpenCellID database was retrieved for research on the 16 January 2017.
+
+Figure 13 highlights the cumulative number of how many cell towers per month have been created (inserted for the first time in the database) and updated (excluding those cell towers with no update) up to January 2017.
+
+
+```{r}
+plot(cars)
+```
+
+The chart highlights that the registering and updating of cell towers has become more active in the past year. This may be related to the expansion of smartphone applications such as [inViu OpenCellID](http://wiki.opencellid.org/wiki/Data_sources) and [OCI4BB](https://sourceforge.net/projects/oci4bb/), which make it easier to contribute.
+
+The month with the highest pick of new cell towers registered is March 2016, with 740,123 new cell towers, that is half of the whole dataset has been generated on that month. A relatively similar sudden change on the number of new cell towers registered is seen in April 2009, where again the size of the database has increase from 23,891 to 40,520 cell towers (+70% increase).
+
+## New cell towers per year
+
+For each year from 2008 to 2016 all newly registered cell towers were plotted, using the latitude and longitude points on the UK map. Figure 14 reveals that cell towers are positioned along main transport routes across the UK as well as in major urban centres.
+
+2010 confirms the low number of new cell tower registrations followed in 2011 with cell towers depicting the main routes across the country. 2013 appears to reveal fewer new registrations for routes, possibly as the cell towers situated along them have already been recorded. However, 2014 and 2015 again show that new cell towers along major routes feature heavily again. This may be due to new cell towers being positioned, contributors to OpenCellID travelling along these routes and being the first to record them, or for OpencellID to be flawed with updating of the same cell tower. 2016 map shows the greater number of cell towers registered during that year. 
+
+In the 2015 and 2016 maps there are a small number of cell towers positioned at sea. These could represent cell towers close to the coast that are connected to on journeys across water. The GPS signal sent to OpenCellID will be that representing the mobile user’s exact position. Another possibility, is that ferries/ships started to have their own cell tower/antennae or that contributors to OpenCellID have just made an observation of these cell-towers.   
+
+```{r}
+uk = get_map(location = c(-4.121072, 53.919044), zoom = 6, maptype = "roadmap")
+
+
+
+p1 <- ggmap(uk) + geom_point(data = year2008, aes(x = lon, y = lat), alpha = 0.2, color = "red", size = .5) +
+  ggtitle("2008") + theme(plot.title = element_text(hjust = 0.5))
+p2 <- ggmap(uk) + geom_point(data = year2009, aes(x = lon, y = lat), alpha = 0.2, color = "red",  size = .5) +
+  ggtitle("2009") + theme(plot.title = element_text(hjust = 0.5))
+p3 <- ggmap(uk) + geom_point(data = year2010, aes(x = lon, y = lat), alpha = 0.2, color = "red",  size = .5) +
+  ggtitle("2010") + theme(plot.title = element_text(hjust = 0.5))
+p4 <- ggmap(uk) + geom_point(data = year2011, aes(x = lon, y = lat), alpha = 0.2, color = "red",  size = .5) +
+  ggtitle("2011") + theme(plot.title = element_text(hjust = 0.5))
+p5 <- ggmap(uk) + geom_point(data = year2012, aes(x = lon, y = lat), alpha = 0.2, color = "red",  size = .5) +
+  ggtitle("2012") + theme(plot.title = element_text(hjust = 0.5))
+p6 <- ggmap(uk) + geom_point(data = year2013, aes(x = lon, y = lat), alpha = 0.2, color = "red",  size = .5) +
+  ggtitle("2013") + theme(plot.title = element_text(hjust = 0.5))
+p7 <- ggmap(uk) + geom_point(data = year2014, aes(x = lon, y = lat), alpha = 0.2, color = "red",  size = .5) +
+  ggtitle("2014") + theme(plot.title = element_text(hjust = 0.5))
+p8 <- ggmap(uk) + geom_point(data = year2015, aes(x = lon, y = lat), alpha = 0.2, color = "red",  size = 0.5) +
+  ggtitle("2015") + theme(plot.title = element_text(hjust = 0.5))
+p9 <- ggmap(uk) + geom_point(data = year2016, aes(x = lon, y = lat), alpha = 0.2, color = "red",  size = 0.5) +
+  ggtitle("2016") + theme(plot.title = element_text(hjust = 0.5))
+```
+
+
+---
+<sup>1</sup> Based on Census 2011
+

@@ -1,0 +1,74 @@
+---
+title: "Kernel Density estimation"
+output: html_notebook
+---
+
+```{r}
+# Import Libraries 
+library(ggplot2)
+library(ggmap)
+```
+
+Using the cell-tower location measurements, a density estimation technique was used to make inferences about the underlying probability density functions. 
+
+In [Kernel Density Estimation](https://en.wikipedia.org/wiki/Kernel_density_estimation), the contribution of each data point is smoothed out from a single point into a region of space surrounding it. Aggregating the individually smoothed contributions gives an overall picture of the structure of the data and its density function.
+
+```{r}
+cell_towers = read.csv("data/London_ct.csv", header = T, sep = ",", stringsAsFactors = F)
+```
+
+```{r}
+draw_ggmap = function(location, zoom, data) {
+  '
+  Function to draw a ggmap and a KDE on top of the map based on the 
+  data points passed to the function 
+  location: string indicating the location for the map to be retrieved
+            using get_map
+  zoom: map zoom, an integer from 3 (continent) to 21 (building)
+  data: data points with lon and lat columns
+  '
+  query = get_map(location = location, zoom = zoom)
+  map = ggmap(query, extent = "device")
+  map +
+    geom_density2d(data = data, aes(x = lon, y = lat), size = 0.3) + 
+    stat_density2d(data = data, 
+                   aes(x = lon, y = lat, fill = ..level.., alpha = ..level..), size = 0.01, 
+                   bins = 16, geom = "polygon") + 
+    scale_fill_gradient(low = "green", high = "red") +
+    scale_alpha(range = c(0, 0.3), guide = FALSE)
+}
+```
+
+###Heathrow Airport
+
+Although Heathrow Terminals 2 & 3 have a high density of cell towers, it is of note that higher densities are observed at major road junctions around the airport. This may be attributed to it being cheaper to site cell-towers on roads rather than in the airport. It may also be that larger cell-towers are allowed on roads than around the built environment, that there are very high numbers of people expected at these junctions, or possibly that OpenCellID receives GPS location information from travellers on these roads rather than in the airport itself. 
+
+```{r}
+draw_ggmap(location = "Heathrow Airport", zoom = 13, cell_towers)
+```
+
+###London’s main stations
+
+This technique was also applied to areas of London containing the major mainline stations: areas where high population densities would be expected during the day. 
+The next plots reveal the high density of cell towers positioned in some of London’s main stations.
+
+####Waterloo Train Station
+```{r}
+draw_ggmap(location = "Waterloo Train Station, London", zoom = 13, cell_towers)
+```
+
+####King's Cross Train Station
+```{r}
+draw_ggmap(location = "King's Cross Train Station, London", zoom = 15, cell_towers)
+```
+
+####Liverpool Street Train Station
+```{r}
+draw_ggmap(location = "Liverpool Street Train Station, London", zoom = 15, cell_towers)
+```
+
+####Victoria Train Station
+```{r}
+draw_ggmap(location = "Victoria Train Station, London", zoom = 15, cell_towers)
+```
+
