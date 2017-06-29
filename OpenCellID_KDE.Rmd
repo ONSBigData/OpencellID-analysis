@@ -1,7 +1,11 @@
 ---
-title: "Kernel Density estimation"
+title: "Part2: Kernel Density estimation"
 output: html_notebook
 ---
+
+This notebook follows along the 3.4 Section produced for the publication "Comparing the density of mobile phone cell towers with population" part of the [ONS Methodology Working Paper Series]()
+
+The relationship between official estimates of UK residential and [workday population](https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/articles/theworkdaypopulationofenglandandwales/2013-10-31#data)<sup>1</sup> density and the density of mobile phone cell-towers is investigated using freely available and open-sourced data on cell-tower locations from [OpenCellID](https://opencellid.org/).
 
 ```{r}
 # Import Libraries 
@@ -72,3 +76,6 @@ draw_ggmap(location = "Liverpool Street Train Station, London", zoom = 15, cell_
 draw_ggmap(location = "Victoria Train Station, London", zoom = 15, cell_towers)
 ```
 
+---
+
+<sup>1</sup> Based on Census 2011
