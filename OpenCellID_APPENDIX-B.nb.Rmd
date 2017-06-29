@@ -24,37 +24,37 @@ The month with the highest pick of new cell towers registered is March 2016, wit
 
 ## New cell towers per year
 
-For each year from 2008 to 2016 all newly registered cell towers were plotted, using the latitude and longitude points on the UK map. Figure 14 reveals that cell towers are positioned along main transport routes across the UK as well as in major urban centres.
+For each year from 2008 to 2016 all newly registered cell towers were plotted, using the latitude and longitude points on the UK map. This reveals that cell towers are positioned along main transport routes across the UK as well as in major urban centres.
 
-2010 confirms the low number of new cell tower registrations followed in 2011 with cell towers depicting the main routes across the country. 2013 appears to reveal fewer new registrations for routes, possibly as the cell towers situated along them have already been recorded. However, 2014 and 2015 again show that new cell towers along major routes feature heavily again. This may be due to new cell towers being positioned, contributors to OpenCellID travelling along these routes and being the first to record them, or for OpencellID to be flawed with updating of the same cell tower. 2016 map shows the greater number of cell towers registered during that year. 
 
-In the 2015 and 2016 maps there are a small number of cell towers positioned at sea. These could represent cell towers close to the coast that are connected to on journeys across water. The GPS signal sent to OpenCellID will be that representing the mobile user’s exact position. Another possibility, is that ferries/ships started to have their own cell tower/antennae or that contributors to OpenCellID have just made an observation of these cell-towers.   
 
 ```{r}
-uk = get_map(location = c(-4.121072, 53.919044), zoom = 6, maptype = "roadmap")
+UK = get_map(location = c(-4.121072, 53.919044), zoom = 6, maptype = "roadmap")
 
-
-
-p1 <- ggmap(uk) + geom_point(data = year2008, aes(x = lon, y = lat), alpha = 0.2, color = "red", size = .5) +
-  ggtitle("2008") + theme(plot.title = element_text(hjust = 0.5))
-p2 <- ggmap(uk) + geom_point(data = year2009, aes(x = lon, y = lat), alpha = 0.2, color = "red",  size = .5) +
-  ggtitle("2009") + theme(plot.title = element_text(hjust = 0.5))
-p3 <- ggmap(uk) + geom_point(data = year2010, aes(x = lon, y = lat), alpha = 0.2, color = "red",  size = .5) +
-  ggtitle("2010") + theme(plot.title = element_text(hjust = 0.5))
-p4 <- ggmap(uk) + geom_point(data = year2011, aes(x = lon, y = lat), alpha = 0.2, color = "red",  size = .5) +
-  ggtitle("2011") + theme(plot.title = element_text(hjust = 0.5))
-p5 <- ggmap(uk) + geom_point(data = year2012, aes(x = lon, y = lat), alpha = 0.2, color = "red",  size = .5) +
-  ggtitle("2012") + theme(plot.title = element_text(hjust = 0.5))
-p6 <- ggmap(uk) + geom_point(data = year2013, aes(x = lon, y = lat), alpha = 0.2, color = "red",  size = .5) +
-  ggtitle("2013") + theme(plot.title = element_text(hjust = 0.5))
-p7 <- ggmap(uk) + geom_point(data = year2014, aes(x = lon, y = lat), alpha = 0.2, color = "red",  size = .5) +
-  ggtitle("2014") + theme(plot.title = element_text(hjust = 0.5))
-p8 <- ggmap(uk) + geom_point(data = year2015, aes(x = lon, y = lat), alpha = 0.2, color = "red",  size = 0.5) +
-  ggtitle("2015") + theme(plot.title = element_text(hjust = 0.5))
-p9 <- ggmap(uk) + geom_point(data = year2016, aes(x = lon, y = lat), alpha = 0.2, color = "red",  size = 0.5) +
-  ggtitle("2016") + theme(plot.title = element_text(hjust = 0.5))
+plor_year = function(year) {
+  sub = data %>% 
+            subset(year = year)
+  
+  ggmap(UK) +
+    geom_point(sub, aes(x = lon, y = lat), alpha = 0.2, color = "red", size = .5) +
+    ggtitle(year) + 
+    theme(plot.title = element_text(hjust = 0.5))
+}
 ```
 
+```{r}
+plor_year("2008")
+plor_year("2009")
+plor_year("2010")
+plor_year("2011")
+plor_year("2012")
+plor_year("2013")
+plor_year("2014")
+plor_year("2015")
+plor_year("2016")
+```
+
+In the 2015 and 2016 maps there are a small number of cell towers positioned at sea. These could represent cell towers close to the coast that are connected to on journeys across water. The GPS signal sent to OpenCellID will be that representing the mobile user’s exact position. Another possibility, is that ferries/ships started to have their own cell tower/antennae or that contributors to OpenCellID have just made an observation of these cell-towers.   
 
 ---
 <sup>1</sup> Based on Census 2011
