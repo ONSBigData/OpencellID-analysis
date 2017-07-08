@@ -42,7 +42,8 @@ LAD$NUMPOINTS_3_MES = NULL
 LAD$X = NULL
 LAD = mutate(LAD, 
        NP = NUMPOINTS / 1000,
-       res = population_2015 / 1000)
+       res = population_2015 / 1000,
+       x_1000_res = NUMPOINTS/(population_2015/1000.0))
 head(LAD)
 ```
 
@@ -50,28 +51,23 @@ Using [2015 mid-year residential population estimates](https://www.ons.gov.uk/pe
 
 ```{r}
 #  Scatter plot of cell tower counts vs. residential population (LADs across UK mainland)
-LAD %>% 
-  select(NP, res, lad2014_name) %>% 
-ggplot() + aes(NP, res) +
+ggplot(LAD, aes(NP, res)) +
   geom_point(size = 2, alpha = 0.8, stroke= 0) + 
   geom_text(data=filter(LAD, res > 400 | NP > 10 | lad2014_name == "City of London"), aes(NP, res,label=lad2014_name), check_overlap = TRUE, hjust=-0.1, vjust=0, size = 4)+
   stat_smooth(method = 'loess') +
   xlab("LAD Cell Towers count in '000s") +
   ylab("LAD UK mainland Residential Population in '000s") 
-  
 ```
 
 ```{r}
-round(cor(LAD$NP, LAD$res), 2)
+round(cor(LAD$NUMPOINTS, LAD$population_2015), 2)
 ```
 
 The next Figure shows the distribution across all LADs of the number of cell-towers per 1000 residents. The mean is around 23 cell towers per 1000 residents but there is one outlier having 502 cell towers in the City of London LAD, an area with a much larger workday population compared with its residential population.
 
 ```{r}
-LA['x_1000_res'] = LA['NUMPOINTS']/(LA['population_2015']/1000.0)
-
-ggplot(LA, aes(x_1000_res, y=..density..)) + 
-  geom_histogram( stat = "bin", bins = 200, col="gray") +
+ggplot(LAD, aes(x_1000_res, y=..density..)) + 
+  geom_histogram(stat = "bin", bins = 200, col="gray") +
   ylab("Density") +
   xlab("N° cell towers x1000 residents")
 ```
