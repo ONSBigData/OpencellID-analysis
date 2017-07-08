@@ -73,18 +73,19 @@ ggplot(LAD, aes(x_1000_res, y=..density..)) +
 ```
 
 ```{r}
-summary(LA['x_1000_res'])
+summary(LAD['x_1000_res'])
 ```
 
 In London and other areas around major urban LADs, it might be expected that the residential population is very different to the [workday population](https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/articles/theworkdaypopulationofenglandandwales/2013-10-31#data). Correlations were therefore run specifically for the 33 Greater London LADs. This revealed that the correlation between residential population and cell tower density in this region is very poor at 0.37 whilst by using workday population the correlation improves up to 0.91.  
 
 ```{r}
-London_LA = filter(LA, grepl('E090000', lad15cd))
-head(London_LA)
+London_LAD = filter(LAD, grepl('E090000', lad15cd))
+head(London_LAD)
 ```
+
 ```{r}
-cor(London_LA$NUMPOINTS, London_LA$population_2015) # 0.371217
-cor(London_LA$NUMPOINTS, London_LA$wd_pop) # 0.9138127
+cor(London_LAD$NUMPOINTS, London_LAD$population_2015) # 0.371217
+#cor(London_LA$NUMPOINTS, London_LA$wd_pop) # 0.9138127
 ```
 
 
