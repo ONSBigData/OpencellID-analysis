@@ -38,8 +38,6 @@ The latitude and longitude coordinates of 1,382,999 cell-towers were mapped<sup>
 
 ```{r}
 LAD = read.csv("data/LAD_UK_mainland.csv", header = T, sep = ",", stringsAsFactors = F)
-LAD$NUMPOINTS_3_MES = NULL
-LAD$X = NULL
 LAD = mutate(LAD, 
        NP = NUMPOINTS / 1000,
        res = population_2015 / 1000,
@@ -150,26 +148,25 @@ The poor correlation between population density and cell tower density across th
 A high population density exists across the whole Greater London area and even though there are still main transport routes, these will similarly run through areas of high population density. Using the workday population for London MSOAs only, the next Figure shows that the correlation with cell towers is a respectable 0.86 compared against a correlation of only 0.15 with 2015 residential population. 
 
 ```{r}
-# Number of cell towers per MSOA vs number of workday population per MSOA. London only
-MSOA_London = read.csv("MSOA_London_wd_res_ct.csv", header = T, sep = ",", stringsAsFactors = F)
+# London MSOAs
+MSOAs_L = read.table("data/MSOA_London.txt", header = F)$V1
+MSOA_London = filter(MSOA_EW, MSOA11CD %in% MSOAs_L)
 ```
 
 ```{r}
-MSOA_London$wd_pop_mag = MSOA_London$wd_pop/magnitude
-MSOA_London$NP = MSOA_London$NUMPOINTS/magnitude
-
-ggplot(MSOA_London, aes(NP, wd_pop_mag)) + geom_point(size = 2, alpha = 0.8, stroke= 0) + stat_smooth(method = "loess") +
+ggplot(MSOA_London, aes(NP, wd)) + geom_point(size = 2, alpha = 0.8, stroke= 0) + stat_smooth(method = "loess") +
   xlab("MSOA London Cell Towers count in '000s") +
   ylab("MSOA London Workday Population in '000s") +
-  geom_text(data=subset(MSOA_London, (wd_pop_mag > 100 & wd_pop_mag < 300) | (NP > 1 & NP < 4)),
-            aes(NP, wd_pop_mag,label=MSOA11NM), check_overlap = TRUE, , hjust=-0.06, vjust=0.2, size = 4) +
+  geom_text(data=subset(MSOA_London, (wd > 100 & wd < 300) | (NP > 1 & NP < 4)),
+            aes(NP, wd,label=MSOA11NM), 
+            check_overlap = TRUE, hjust=-0.06, vjust=0.2, size = 4) +
   geom_text(data=subset(MSOA_London, NP > 4),
-            aes(NP, wd_pop_mag,label=MSOA11NM), check_overlap = TRUE,hjust=1.1, size = 4)
+            aes(NP, wd,label=MSOA11NM), check_overlap = TRUE,hjust=1.1, size = 4)
 ```
 
 ```{r}
-cor(MSOA_London$NUMPOINTS, MSOA_London$mid_2015_res_pop) # 0.1461389
-cor(MSOA_London$NUMPOINTS, MSOA_London$wd_pop) # 0.8581741
+round(cor(MSOA_London$NP, MSOA_London$res), 2) # 0.1461389
+round(cor(MSOA_London$NP, MSOA_London$wd), 2) # 0.8581741
 ```
 
 ## Analysis for Lower Super Output Areas (LSOAs) in London only
