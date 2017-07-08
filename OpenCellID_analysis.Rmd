@@ -149,8 +149,8 @@ A high population density exists across the whole Greater London area and even t
 
 ```{r}
 # London MSOAs
-MSOAs_L = read.table("data/MSOA_London.txt", header = F)$V1
-MSOA_London = filter(MSOA_EW, MSOA11CD %in% MSOAs_L)
+MSOAs_L = read.table("data/MSOA_London.txt", header = F)
+MSOA_London = filter(MSOA_EW, MSOA11CD %in% MSOAs_L$V1)
 ```
 
 ```{r}
