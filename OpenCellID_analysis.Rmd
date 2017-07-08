@@ -95,31 +95,34 @@ For all cell-towers in England and Wales (1,262,507 in total), the latitude and 
 
 ```{r}
 # Number of cell towers per MSOA vs. number of residents per MSOA. England and Wales
-MSOA_EW = read.csv("MSOA_EW_wd_res_ct.csv", header = T, sep = ",", stringsAsFactors = F)
-MSOA_EW$NP = MSOA_EW$NUMPOINTS/magnitude
-MSOA_EW$wd_pop_magn = MSOA_EW$wd_pop/magnitude
-MSOA_EW$res_magn = MSOA_EW$mid_2015_res_pop/magnitude
+MSOA_EW = read.csv("data/MSOA_EW_wd_res_ct.csv", header = T, sep = ",", stringsAsFactors = F)
+MSOA_EW = mutate(MSOA_EW, 
+       NP = NUMPOINTS / 1000,
+       res = mid_2015_res_pop / 1000,
+       wd = wd_pop / 1000)
+head(MSOA_EW)
 ```
 
 The next Figure shows that there is no linear relationship between cell-tower counts and residential population across MSOAs in England and Wales: the correlation is 0.18. 
 
 ```{r}
 # Number of cell towers per MSOA vs. number of residents per MSOA. England and Wales
-ggplot(MSOA_EW, aes(NP, res_magn)) + geom_point(size = 2, alpha = 0.8, stroke= 0) + stat_smooth(method = "loess") +
+ggplot(MSOA_EW, aes(NP, res)) + 
+  geom_point(size = 2, alpha = 0.8, stroke= 0) + 
+  stat_smooth(method = "loess") +
   xlab("MSOA Cell Towers count in '000s") +
   ylab("MSOA E&W Residential Population in '000s") +
-  geom_text(data=subset(MSOA_EW, res_magn > 15 | (NP > 1.5 & NP < 4)),
-            aes(NP, res_magn,label=MSOA11NM), check_overlap = TRUE, hjust=-0.06, vjust=0.2, size = 4)+
-  geom_text(data=subset(MSOA_EW, NP > 4),
-            aes(NP, res_magn,label=MSOA11NM), check_overlap = TRUE,hjust=0.8, vjust=1.2, size = 4)+
-  geom_text(data=subset(MSOA_EW, res_magn < 3),
-            aes(NP, res_magn,label=MSOA11NM), check_overlap = TRUE,hjust=-0.08, vjust=0.2, size = 4)
+  geom_text(data=filter(MSOA_EW, res > 15 | (NP > 1.5 & NP < 4)),
+            aes(NP, res,label=MSOA11NM), check_overlap = TRUE, hjust=-0.06, vjust=0.2, size = 4)+
+  geom_text(data=filter(MSOA_EW, NP > 4),
+            aes(NP, res,label=MSOA11NM), check_overlap = TRUE,hjust=0.8, vjust=1.2, size = 4)+
+  geom_text(data=filter(MSOA_EW, res < 3),
+            aes(NP, res,label=MSOA11NM), check_overlap = TRUE,hjust=-0.08, vjust=0.2, size = 4)
 
 ```
 
 ```{r}
-paste("Correlation between cell towers per MSOA vs. number of residents per MSOA")
-cor(MSOA_EW$NUMPOINTS, MSOA_EW$mid_2015_res_pop)
+round(cor(MSOA_EW$NP, MSOA_EW$res),2)
 ```
 
 
@@ -127,18 +130,19 @@ Although workday population is better correlated with cell-tower counts, this co
 
 ```{r}
 # Number of cell towers per MSOA vs. number of workday population per MSOA. England and Wales
-
-ggplot(MSOA_EW, aes(NP, wd_pop_magn)) + geom_point(size = 2, alpha = 0.8, stroke= 0) + stat_smooth(method = "loess") +
+ggplot(MSOA_EW, aes(NP, wd)) + 
+  geom_point(size = 2, alpha = 0.8, stroke= 0) + 
+  stat_smooth(method = "loess") +
   xlab("MSOA Cell Towers count in '000s") +
   ylab("MSOA E&W Workday Population in '000s") +
-  geom_text(data=subset(MSOA_EW, (wd_pop_magn > 80 & wd_pop_magn < 300) | (NP > 1.5 & NP < 4)),
-            aes(NP, wd_pop_magn,label=MSOA11NM), check_overlap = TRUE, hjust=-0.06, vjust=0.2, size = 4)+
-  geom_text(data=subset(MSOA_EW, NP > 4),
-            aes(NP, wd_pop_magn,label=MSOA11NM), check_overlap = TRUE,hjust=1.1, size = 4)
+  geom_text(data=filter(MSOA_EW, (wd > 80 & wd < 300) | (NP > 1.5 & NP < 4)),
+            aes(NP, wd,label=MSOA11NM), check_overlap = TRUE, hjust=-0.06, vjust=0.2, size = 4)+
+  geom_text(data=filter(MSOA_EW, NP > 4),
+            aes(NP, wd,label=MSOA11NM), check_overlap = TRUE,hjust=1.1, size = 4)
 ```
 
 ```{r}
-cor(MSOA_EW$NUMPOINTS, MSOA_EW$wd_pop) 
+round(cor(MSOA_EW$NP, MSOA_EW$wd), 2)
 ```
 
 The poor correlation between population density and cell tower density across the country is possibly due to the siting of large numbers of cell towers on major transport routes, typically in areas of low population density, as in Eden LAD identified above.
