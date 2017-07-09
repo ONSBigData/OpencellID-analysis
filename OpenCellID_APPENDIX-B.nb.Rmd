@@ -11,12 +11,12 @@ Each cell tower in the OpenCellID database has a timestamp representing the date
 
 Data from the OpenCellID database was retrieved for research on the 16 January 2017.
 
-Figure 13 highlights the cumulative number of how many cell towers per month have been created (inserted for the first time in the database) and updated (excluding those cell towers with no update) up to January 2017.
-
 ```{r}
-# load ct data
+ct = read.table("data/cell_towers2017.csv", header = T, sep = ",", stringsAsFactors = F)
+head(ct)
 ```
 
+The next figure highlights the cumulative number of how many cell towers per month have been created (inserted for the first time in the database) and updated (excluding those cell towers with no update) up to January 2017.
 
 
 ```{r}
