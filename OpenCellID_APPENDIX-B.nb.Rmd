@@ -64,7 +64,7 @@ For each year from 2008 to 2016 all newly registered cell towers were plotted<su
 
 ```{r}
 ct = ct %>% 
-  mutate( year = monthStart(created))
+  mutate( year = format(c_date, "%Y"))
 ```
 
 ```{r}
