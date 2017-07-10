@@ -10,6 +10,7 @@ The relationship between official estimates of UK residential and [workday popul
 ```{r}
 # Import Libraries 
 library(dplyr)
+library(reshape2)
 source("utils.R")
 ```
 
@@ -25,10 +26,33 @@ head(ct)
 
 The next figure highlights the cumulative number of how many cell towers per month have been created (inserted for the first time in the database) and updated (excluding those cell towers with no update) up to January 2017.
 
+```{r}
+ct = ct %>% 
+  mutate( c_date = monthStart(created),
+          u_date = monthStart(updated))
+by_create = count(ct, c_date)
+by_update = ct %>% group_by(u_date) %>% summarise(n = length(cell[samples > 1]))
+``` 
 
 ```{r}
-plot(cars)
+cumsummed = by_create %>% 
+  full_join(by_update, 
+            by = c("c_date" = "u_date"), 
+            suffix = c(".created", ".updated")) %>%
+  arrange(c_date) %>%
+  mutate(cum_created = cumsum(n.created), 
+         cum_updated = cumsum(n.updated)) %>%
+  select(c_date, cum_created, cum_updated)
+
+melted = melt(cumsummed, id = "c_date")
+ggplot(melted, aes(x = c_date, y = value, colour = variable, group = variable)) + 
+  geom_line() +
+  xlab("") + ylab("") +
+  scale_y_continuous(labels = scales::comma, breaks = seq(0, 1600000, 200000)) +
+  scale_color_manual(labels =  c("Created", "Updated"), values = c("red", "blue")) + 
+  theme(legend.title = element_blank())
 ```
+
 
 The chart highlights that the registering and updating of cell towers has become more active in the past year. This may be related to the expansion of smartphone applications such as [inViu OpenCellID](http://wiki.opencellid.org/wiki/Data_sources) and [OCI4BB](https://sourceforge.net/projects/oci4bb/), which make it easier to contribute.
 
@@ -40,10 +64,7 @@ For each year from 2008 to 2016 all newly registered cell towers were plotted<su
 
 ```{r}
 ct = ct %>% 
-  mutate( date = as.POSIXct(created, origin="1970-01-01"),
-          year = format(date,'%Y')) %>%
-  select(lon, lat, year)
-head(ct)
+  mutate( year = monthStart(created))
 ```
 
 ```{r}
