@@ -36,3 +36,9 @@ plor_year = function(y) {
     ggtitle(y) + 
     theme(plot.title = element_text(hjust = 0.5))
 }
+
+monthStart <- function(x) {
+  x <- as.POSIXlt(x, origin="1970-01-01")
+  x$mday <- 1
+  return(as.Date(x))
+}
