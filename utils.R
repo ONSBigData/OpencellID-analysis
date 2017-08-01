@@ -2,6 +2,8 @@ library(ggplot2)
 library(ggmap)
 library(mapproj)
 
+legend_theme = theme(legend.title = element_text(size=10, face="bold"))
+
 draw_ggmap = function(location, zoom, data, scale_color_lims=NULL) {
   '
   Function to draw a ggmap and a KDE on top of the map based on the
@@ -17,8 +19,10 @@ draw_ggmap = function(location, zoom, data, scale_color_lims=NULL) {
     stat_density2d(data = data,
                    aes(x = lon, y = lat, fill = ..level.., alpha = ..level..), size = 0.01,
                    bins = 16, geom = "polygon") +
-    scale_fill_gradient(low = "black", high = "red", limits = scale_color_lims) +
-    scale_alpha(range = c(0, 0.3), guide = FALSE)
+    scale_fill_gradient(low = "black", high = "red", limits = scale_color_lims,
+                        name = "Cell Tower\nDensity") +
+    scale_alpha(range = c(0, 0.3), guide = FALSE) +
+    legend_theme
 }
 
 UK = get_map(location = c(-4.121072, 53.919044), zoom = 6, maptype = "roadmap")
