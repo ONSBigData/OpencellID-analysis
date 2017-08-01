@@ -17,7 +17,7 @@ In [Kernel Density Estimation](https://en.wikipedia.org/wiki/Kernel_density_esti
 
 ```{r}
 ct = read.csv("data/London_ct.csv", header = T, sep = ",", stringsAsFactors = F)
-head(ct)
+ct
 ```
 
 
@@ -36,22 +36,26 @@ The next plots reveal the high density of cell towers positioned in some of Lond
 
 ####Waterloo Train Station
 ```{r}
-draw_ggmap(location = "Waterloo Train Station, London", zoom = 13, cell_towers)
+draw_ggmap(location = "Waterloo Train Station, London", 
+           zoom = 15, ct, scale_color_lims = c(0, 7000))
 ```
 
 ####King's Cross Train Station
 ```{r}
-draw_ggmap(location = "King's Cross Train Station, London", zoom = 15, cell_towers)
+draw_ggmap(location = "King's Cross Train Station, London", zoom = 15, 
+           ct, scale_color_lims = c(0, 7000))
 ```
 
 ####Liverpool Street Train Station
 ```{r}
-draw_ggmap(location = "Liverpool Street Train Station, London", zoom = 15, cell_towers)
+draw_ggmap(location = "Liverpool Street Train Station, London", zoom = 15, 
+           ct, scale_color_lims = c(0, 7000))
 ```
 
 ####Victoria Train Station
 ```{r}
-draw_ggmap(location = "Victoria Train Station, London", zoom = 15, cell_towers)
+draw_ggmap(location = "Victoria Train Station, London", zoom = 15, 
+           ct, scale_color_lims = c(0, 7000))
 ```
 
 ---
