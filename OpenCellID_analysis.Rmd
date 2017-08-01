@@ -59,6 +59,19 @@ ggplot(LAD, aes(NP, res)) +
 round(cor(LAD$NUMPOINTS, LAD$population_2015), 2)
 ```
 
+Within LADs in England and Wales only, correlation between cell-tower density and residential population is 0.83 and with workday population is 0.86. 
+
+```{r}
+LAD_EN = LAD %>%  filter(grepl("E|W", LAD15CD))
+LAD_EN
+```
+
+```{r}
+round(cor(LAD_EN$NUMPOINTS, LAD_EN$population_2015), 2) # 0.83
+round(cor(LAD_EN$NUMPOINTS, LAD_EN$wd_pop), 2) # 0.86
+```
+
+
 The next Figure shows the distribution across all LADs of the number of cell-towers per 1000 residents. The mean is around 23 cell towers per 1000 residents but there is one outlier having 502 cell towers in the City of London LAD, an area with a much larger workday population compared with its residential population.
 
 ```{r}
