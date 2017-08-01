@@ -11,6 +11,9 @@ The relationship between official estimates of UK residential and [workday popul
 # Import Libraries 
 library(ggplot2)
 library(dplyr)
+new_theme = theme_get() + theme(axis.text = element_text(size=14),
+                                axis.title = element_text(size=14))
+theme_set(new_theme)
 ```
 
 
@@ -22,15 +25,10 @@ Multiple GPS measurements referring to the same antenna are averaged to estimate
 
 ```{r}
 ct = read.table("data/cell_towers2017.csv", header = T, sep = ",", stringsAsFactors = F)
-head(ct)
+ct
 ```
 
 The number of cell-towers associated with UK MCCs and listed in the OpenCellID database as per date 16 January 2017 is 1,427,795.
-
-```{r}
-length(ct[,1])
-```
-
 
 ##Analysis at Local Authority District (LAD) level 
 
@@ -42,7 +40,7 @@ LAD = mutate(LAD,
        NP = NUMPOINTS / 1000,
        res = population_2015 / 1000,
        x_1000_res = NUMPOINTS/(population_2015/1000.0))
-head(LAD)
+LAD
 ```
 
 Using [2015 mid-year residential population estimates](https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/datasets/populationestimatesforukenglandandwalesscotlandandnorthernireland) for the UK mainland at LAD level, the next Figure shows a scatter plot of the count of cell-towers against residents. It shows that there is a reasonable approximately linear relationship as depicted by a [LOESS](https://en.wikipedia.org/wiki/Local_regression) regression line. The correlation is 0.85.
@@ -65,9 +63,10 @@ The next Figure shows the distribution across all LADs of the number of cell-tow
 
 ```{r}
 ggplot(LAD, aes(x_1000_res, y=..density..)) + 
-  geom_histogram(stat = "bin", bins = 200, col="gray") +
+  geom_histogram(stat = "bin", bins = 200, col="gray", 
+                 fill="#ef3b2c") +
   ylab("Density") +
-  xlab("N° cell towers x1000 residents")
+  xlab("N° cell towers x1000 residents") 
 ```
 
 ```{r}
@@ -78,7 +77,7 @@ In London and other areas around major urban LADs, it might be expected that the
 
 ```{r}
 London_LAD = filter(LAD, grepl('E090000', lad15cd))
-head(London_LAD)
+London_LAD
 ```
 
 ```{r}
@@ -98,7 +97,7 @@ MSOA_EW = mutate(MSOA_EW,
        NP = NUMPOINTS / 1000,
        res = mid_2015_res_pop / 1000,
        wd = wd_pop / 1000)
-head(MSOA_EW)
+MSOA_EW
 ```
 
 The next Figure shows that there is no linear relationship between cell-tower counts and residential population across MSOAs in England and Wales: the correlation is 0.18. 
@@ -179,7 +178,7 @@ LSOA_London = mutate(LSOA_London,
        NP = NUMPOINTS / 1000,
        res = mid_2015_res_pop / 1000,
        wd = wd_pop / 1000)
-head(LSOA_London)s
+LSOA_London
 ```
 
 ```{r}
