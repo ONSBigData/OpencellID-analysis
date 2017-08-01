@@ -1,6 +1,9 @@
 ---
-title: "Part 1: Comparing the density of mobile phone cell towers with population: Analysis"
-output: html_notebook
+title: 'Part 1: Comparing the density of mobile phone cell towers with population:
+  Analysis'
+output:
+  html_notebook: default
+  html_document: default
 ---
 
 This notebook follows along the analysis produced for the publication "Comparing the density of mobile phone cell towers with population" part of the [ONS Methodology Working Paper Series]()
@@ -56,7 +59,7 @@ ggplot(LAD, aes(NP, res)) +
 ```
 
 ```{r}
-round(cor(LAD$NUMPOINTS, LAD$population_2015), 2)
+paste0("Corraletion between cell tower counts and Resiential population at Local Authority District Level: ", round(cor(LAD$NUMPOINTS, LAD$population_2015), 2))
 ```
 
 Within LADs in England and Wales only, correlation between cell-tower density and residential population is 0.83 and with workday population is 0.86. 
@@ -67,8 +70,9 @@ LAD_EN
 ```
 
 ```{r}
-round(cor(LAD_EN$NUMPOINTS, LAD_EN$population_2015), 2) # 0.83
-round(cor(LAD_EN$NUMPOINTS, LAD_EN$wd_pop), 2) # 0.86
+paste0("Corraletion between cell tower counts and Resiential population at Local Authority District Level (England and Wales only): ", round(cor(LAD_EN$NUMPOINTS, LAD_EN$population_2015), 2)) # 0.83
+
+paste0("Corraletion between cell tower counts and WorkDay population at Local Authority District Level (England and Wales only): ", round(cor(LAD_EN$NUMPOINTS, LAD_EN$wd_pop), 2)) # 0.86
 ```
 
 
@@ -83,6 +87,7 @@ ggplot(LAD, aes(x_1000_res, y=..density..)) +
 ```
 
 ```{r}
+paste0("Summary Statistics")
 summary(LAD['x_1000_res'])
 ```
 
@@ -94,8 +99,9 @@ London_LAD
 ```
 
 ```{r}
-round(cor(London_LAD$NUMPOINTS, London_LAD$population_2015), 2) # 0.37
-round(cor(London_LAD$NUMPOINTS, London_LAD$wd_pop), 2) # 0.91
+paste0("Corraletion between cell tower counts and Resiential population at Local Authority District Level (London only): ", round(cor(London_LAD$NUMPOINTS, London_LAD$population_2015), 2)) # 0.37
+
+paste0("Corraletion between cell tower counts and WorkDay population at Local Authority District Level (London only): ", round(cor(London_LAD$NUMPOINTS, London_LAD$wd_pop), 2)) # 0.91
 ```
 
 
@@ -132,7 +138,7 @@ ggplot(MSOA_EW, aes(NP, res)) +
 ```
 
 ```{r}
-round(cor(MSOA_EW$NP, MSOA_EW$res),2)
+paste0("Corraletion between cell tower counts and Resiential population at MSOA Level (England & Wales): ", round(cor(MSOA_EW$NP, MSOA_EW$res),2))
 ```
 
 
@@ -152,7 +158,7 @@ ggplot(MSOA_EW, aes(NP, wd)) +
 ```
 
 ```{r}
-round(cor(MSOA_EW$NP, MSOA_EW$wd), 2)
+paste0("Corraletion between cell tower counts and WorkDay population at Local Authority District Level (London only): ", round(cor(MSOA_EW$NP, MSOA_EW$wd), 2)) # 0.51
 ```
 
 The poor correlation between population density and cell tower density across the country is possibly due to the siting of large numbers of cell towers on major transport routes, typically in areas of low population density, as in Eden LAD identified above.
@@ -177,8 +183,9 @@ ggplot(MSOA_London, aes(NP, wd)) + geom_point(size = 2, alpha = 0.8, stroke= 0) 
 ```
 
 ```{r}
-round(cor(MSOA_London$NP, MSOA_London$res), 2) # 0.15
-round(cor(MSOA_London$NP, MSOA_London$wd), 2) # 0.86
+paste0("Corraletion between cell tower counts and Resiential population at MSOA Level (London only): ", round(cor(MSOA_London$NP, MSOA_London$res), 2)) # 0.15
+
+paste0("Corraletion between cell tower counts and WorkDay population at MSOA Level (London only): ", round(cor(MSOA_London$NP, MSOA_London$wd), 2)) # 0.86
 ```
 
 ## Analysis for Lower Super Output Areas (LSOAs) in London only
@@ -208,8 +215,9 @@ ggplot(LSOA_London, aes(NP, wd)) +
 ```
 
 ```{r}
-round(cor(LSOA_London$NP, LSOA_London$res), 2) # 0.14
-round(cor(LSOA_London$NP, LSOA_London$wd), 2) # 0.82
+paste0("Corraletion between cell tower counts and Resiential population at LSOA Level (London only): ", round(cor(LSOA_London$NP, LSOA_London$res), 2)) # 0.14
+
+paste0("Corraletion between cell tower counts and WorkDay population at LSOA Level (London only): ", round(cor(LSOA_London$NP, LSOA_London$wd), 2)) # 0.82
 ```
 
 Correlation with cell tower density across London LSOAs remains high at 0.82. This compares with 0.14 for similar correlation with residential population, indicating that cell towers are more likely to be positioned to cater for the expected peak demand for mobile telephony which, in London, are more likely to arise from populations present during the workday.
