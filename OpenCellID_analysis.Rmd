@@ -24,7 +24,7 @@ The next table illustrates a snapshot of the OpenCellID database updated at 16 J
 Multiple GPS measurements referring to the same antenna are averaged to estimate its location more accurately. The main fields are: mobile technology (radio), mobile country code (mcc)<sup>2</sup>, mobile network (net), cell, longitude (lon), latitude (lat), range, samples (number of measurements), changeable (chg), created (timestamp of first measurement), updated (timestamp of last measurement). More detail on the definitions of these fields are in Appendix A of the publication.
 
 ```{r}
-ct = read.table("data/cell_towers2017.csv", header = T, sep = ",", stringsAsFactors = F)
+ct = read.table("Data/cell_towers2017.csv", header = T, sep = ",", stringsAsFactors = F)
 ct
 ```
 
@@ -35,7 +35,7 @@ The number of cell-towers associated with UK MCCs and listed in the OpenCellID d
 The latitude and longitude coordinates of 1,382,999 cell-towers were mapped<sup>2</sup> into [2015 UK mainland LAD boundaries](http://geoportal.statistics.gov.uk/datasets?q=LAD%20Boundaries%202015&sort=name), the remaining 44,796 cell-towers being unallocated as they were based in Northern Ireland or their estimated position was in water around the UK coastline. 
 
 ```{r}
-LAD = read.csv("data/LAD_UK_mainland.csv", header = T, sep = ",", stringsAsFactors = F)
+LAD = read.csv("Data/LAD_UK.csv", header = T, sep = ",", stringsAsFactors = F)
 LAD = mutate(LAD, 
        NP = NUMPOINTS / 1000,
        res = population_2015 / 1000,
@@ -43,13 +43,13 @@ LAD = mutate(LAD,
 LAD
 ```
 
-Using [2015 mid-year residential population estimates](https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/datasets/populationestimatesforukenglandandwalesscotlandandnorthernireland) for the UK mainland at LAD level, the next Figure shows a scatter plot of the count of cell-towers against residents. It shows that there is a reasonable approximately linear relationship as depicted by a [LOESS](https://en.wikipedia.org/wiki/Local_regression) regression line. The correlation is 0.85.
+Using [2015 mid-year residential population estimates](https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/datasets/populationestimatesforukenglandandwalesscotlandandnorthernireland) for the UK mainland at LAD level, the next Figure shows a scatter plot of the count of cell-towers against residents. It shows that there is a reasonable approximately linear relationship as depicted by a [LOESS](https://en.wikipedia.org/wiki/Local_regression) regression line. The correlation is 0.84.
 
 ```{r}
 #  Scatter plot of cell tower counts vs. residential population (LADs across UK mainland)
 ggplot(LAD, aes(NP, res)) +
   geom_point(size = 2, alpha = 0.8, stroke= 0) + 
-  geom_text(data=filter(LAD, res > 400 | NP > 10 | lad2014_name == "City of London"), aes(NP, res,label=lad2014_name), check_overlap = TRUE, hjust=-0.1, vjust=0, size = 4)+
+  geom_text(data=filter(LAD, res > 400 | NP > 10 | LAD15NM == "City of London"), aes(NP, res,label=LAD15NM), check_overlap = TRUE, hjust=-0.1, vjust=0, size = 4)+
   stat_smooth(method = 'loess') +
   xlab("LAD Cell Towers count in '000s") +
   ylab("LAD UK mainland Residential Population in '000s") 
@@ -76,13 +76,13 @@ summary(LAD['x_1000_res'])
 In London and other areas around major urban LADs, it might be expected that the residential population is very different to the [workday population](https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/articles/theworkdaypopulationofenglandandwales/2013-10-31#data). Correlations were therefore run specifically for the 33 Greater London LADs. This revealed that the correlation between residential population and cell tower density in this region is very poor at 0.37 whilst by using workday population the correlation improves up to 0.91.  
 
 ```{r}
-London_LAD = filter(LAD, grepl('E090000', lad15cd))
+London_LAD = filter(LAD, grepl('E090000', LAD15CD))
 London_LAD
 ```
 
 ```{r}
-cor(London_LAD$NUMPOINTS, London_LAD$population_2015) # 0.371217
-#cor(London_LA$NUMPOINTS, London_LA$wd_pop) # 0.9138127
+round(cor(London_LAD$NUMPOINTS, London_LAD$population_2015), 2) # 0.37
+round(cor(London_LAD$NUMPOINTS, London_LAD$wd_pop), 2) # 0.91
 ```
 
 
@@ -92,7 +92,7 @@ For all cell-towers in England and Wales (1,262,507 in total), the latitude and 
 
 ```{r}
 # Number of cell towers per MSOA vs. number of residents per MSOA. England and Wales
-MSOA_EW = read.csv("data/MSOA_EW_wd_res_ct.csv", header = T, sep = ",", stringsAsFactors = F)
+MSOA_EW = read.csv("Data/MSOA_EW_wd_res_ct.csv", header = T, sep = ",", stringsAsFactors = F)
 MSOA_EW = mutate(MSOA_EW, 
        NP = NUMPOINTS / 1000,
        res = mid_2015_res_pop / 1000,
@@ -148,7 +148,7 @@ A high population density exists across the whole Greater London area and even t
 
 ```{r}
 # London MSOAs
-MSOAs_L = read.table("data/MSOA_London.txt", header = F)
+MSOAs_L = read.table("Lookups/MSOA_London.txt", header = F)
 MSOA_London = filter(MSOA_EW, MSOA11CD %in% MSOAs_L$V1)
 ```
 
@@ -164,8 +164,8 @@ ggplot(MSOA_London, aes(NP, wd)) + geom_point(size = 2, alpha = 0.8, stroke= 0) 
 ```
 
 ```{r}
-round(cor(MSOA_London$NP, MSOA_London$res), 2) # 0.1461389
-round(cor(MSOA_London$NP, MSOA_London$wd), 2) # 0.8581741
+round(cor(MSOA_London$NP, MSOA_London$res), 2) # 0.15
+round(cor(MSOA_London$NP, MSOA_London$wd), 2) # 0.86
 ```
 
 ## Analysis for Lower Super Output Areas (LSOAs) in London only
@@ -173,7 +173,7 @@ round(cor(MSOA_London$NP, MSOA_London$wd), 2) # 0.8581741
 Since the distortion caused by transport routes may not be as pronounced in London, a more focussed analysis was conducted in this region to see if correlations between cell towers and population density might be good at even smaller geographies, such as LSOA.
 
 ```{r}
-LSOA_London = read.csv("data/LSOA_London_wd_res_ct.csv", header = T, sep = ",", stringsAsFactors = F)
+LSOA_London = read.csv("Data/LSOA_London_wd_res_ct.csv", header = T, sep = ",", stringsAsFactors = F)
 LSOA_London = mutate(LSOA_London, 
        NP = NUMPOINTS / 1000,
        res = mid_2015_res_pop / 1000,
@@ -195,8 +195,8 @@ ggplot(LSOA_London, aes(NP, wd)) +
 ```
 
 ```{r}
-round(cor(LSOA_London$NP, LSOA_London$res), 2) # 0.1368175
-round(cor(LSOA_London$NP, LSOA_London$wd), 2) # 0.8166114
+round(cor(LSOA_London$NP, LSOA_London$res), 2) # 0.14
+round(cor(LSOA_London$NP, LSOA_London$wd), 2) # 0.82
 ```
 
 Correlation with cell tower density across London LSOAs remains high at 0.82. This compares with 0.14 for similar correlation with residential population, indicating that cell towers are more likely to be positioned to cater for the expected peak demand for mobile telephony which, in London, are more likely to arise from populations present during the workday.
