@@ -11,7 +11,7 @@ This notebook follows along the analysis produced for the publication "Comparing
 
 The relationship between official estimates of UK residential and [workday population](https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/articles/theworkdaypopulationofenglandandwales/2013-10-31#data)<sup>1</sup> density and the density of mobile phone cell-towers is investigated using freely available and open-sourced data on cell-tower locations from [OpenCellID](https://opencellid.org/).
 
-```{r}
+```{r Import, message=FALSE, warning=FALSE, include=FALSE}
 # Import Libraries 
 library(ggplot2)
 library(dplyr)
@@ -29,7 +29,7 @@ Multiple GPS measurements referring to the same antenna are averaged to estimate
 
 ```{r}
 ct = read.table("Data/cell_towers2017.csv", header = T, sep = ",", stringsAsFactors = F)
-ct
+head(ct)
 ```
 
 The number of cell-towers associated with UK MCCs and listed in the OpenCellID database as per date 16 January 2017 is 1,427,795.
@@ -44,12 +44,12 @@ LAD = mutate(LAD,
        NP = NUMPOINTS / 1000,
        res = population_2015 / 1000,
        x_1000_res = NUMPOINTS/(population_2015/1000.0))
-LAD
+head(LAD)
 ```
 
 Using [2015 mid-year residential population estimates](https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/datasets/populationestimatesforukenglandandwalesscotlandandnorthernireland) for the UK mainland at LAD level, the next Figure shows a scatter plot of the count of cell-towers against residents. It shows that there is a reasonable approximately linear relationship as depicted by a [LOESS](https://en.wikipedia.org/wiki/Local_regression) regression line. The correlation is 0.84.
 
-```{r}
+```{r UK LAD res vs. ct, message=FALSE, warning=FALSE}
 #  Scatter plot of cell tower counts vs. residential population (LADs across UK mainland)
 ggplot(LAD, aes(NP, res)) +
   geom_point(size = 2, alpha = 0.8, stroke= 0) + 
@@ -59,7 +59,7 @@ ggplot(LAD, aes(NP, res)) +
   ylab("LAD UK mainland Residential Population in '000s") 
 ```
 
-```{r}
+```{r, echo=FALSE}
 paste0("Corraletion between cell tower counts and Resiential population at Local Authority District Level: ", round(cor(LAD$NUMPOINTS, LAD$population_2015), 2))
 ```
 
@@ -67,7 +67,7 @@ Within LADs in England and Wales only, correlation between cell-tower density an
 
 ```{r}
 LAD_EN = LAD %>%  filter(grepl("E|W", LAD15CD))
-LAD_EN
+head(LAD_EN)
 ```
 
 ```{r}
@@ -96,7 +96,7 @@ In London and other areas around major urban LADs, it might be expected that the
 
 ```{r}
 London_LAD = filter(LAD, grepl('E090000', LAD15CD))
-London_LAD
+head(London_LAD)
 ```
 
 ```{r}
@@ -117,7 +117,7 @@ MSOA_EW = mutate(MSOA_EW,
        NP = NUMPOINTS / 1000,
        res = mid_2015_res_pop / 1000,
        wd = wd_pop / 1000)
-MSOA_EW
+head(MSOA_EW)
 ```
 
 The next Figure shows that there is no linear relationship between cell-tower counts and residential population across MSOAs in England and Wales: the correlation is 0.18. 
@@ -199,7 +199,7 @@ LSOA_London = mutate(LSOA_London,
        NP = NUMPOINTS / 1000,
        res = mid_2015_res_pop / 1000,
        wd = wd_pop / 1000)
-LSOA_London
+head(LSOA_London)
 ```
 
 ```{r}
