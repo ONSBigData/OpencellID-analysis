@@ -1,37 +1,11 @@
 Part 1: Comparing the density of mobile phone cell towers with population: Analysis
 ================
 Alessandra Sozzi
-2017-08-04
-
-Part 1: Comparing the density of mobile phone cell towers with population: Analysis
-===================================================================================
+2017-08-05
 
 This notebook follows along the analysis produced for the publication "Comparing the density of mobile phone cell towers with population" part of the [ONS Methodology Working Paper Series]()
 
 The relationship between official estimates of UK residential and [workday population](https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/articles/theworkdaypopulationofenglandandwales/2013-10-31#data)<sup>1</sup> density and the density of mobile phone cell-towers is investigated using freely available and open-sourced data on cell-tower locations from [OpenCellID](https://opencellid.org/).
-
-``` r
-# Import Libraries 
-library(ggplot2)
-library(dplyr)
-```
-
-    ## 
-    ## Attaching package: 'dplyr'
-
-    ## The following objects are masked from 'package:stats':
-    ## 
-    ##     filter, lag
-
-    ## The following objects are masked from 'package:base':
-    ## 
-    ##     intersect, setdiff, setequal, union
-
-``` r
-new_theme = theme_get() + theme(axis.text = element_text(size=14),
-                                axis.title = element_text(size=14))
-theme_set(new_theme)
-```
 
 OpenCellID
 ----------
@@ -103,13 +77,7 @@ ggplot(LAD, aes(NP, res)) +
   ylab("LAD UK mainland Residential Population in '000s") 
 ```
 
-![](OpenCellID_analysis_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-4-1.png)
-
-``` r
-paste0("Corraletion between cell tower counts and Resiential population at Local Authority District Level: ", round(cor(LAD$NUMPOINTS, LAD$population_2015), 2))
-```
-
-    ## [1] "Corraletion between cell tower counts and Resiential population at Local Authority District Level: 0.84"
+![](OpenCellID_analysis_files/figure-markdown_github-ascii_identifiers/UK%20LAD%20res%20vs.%20ct-1.png)
 
 Within LADs in England and Wales only, correlation between cell-tower density and residential population is 0.83 and with workday population is 0.86.
 
@@ -134,16 +102,18 @@ head(LAD_EN)
     ## 6 126.528  21.852871
 
 ``` r
-paste0("Corraletion between cell tower counts and Resiential population at Local Authority District Level (England and Wales only): ", round(cor(LAD_EN$NUMPOINTS, LAD_EN$population_2015), 2)) # 0.83
+# Corraletion between cell tower counts and Resiential population at Local Authority District Level (England and Wales only)
+round(cor(LAD_EN$NUMPOINTS, LAD_EN$population_2015), 2) # 0.83
 ```
 
-    ## [1] "Corraletion between cell tower counts and Resiential population at Local Authority District Level (England and Wales only): 0.83"
+    ## [1] 0.83
 
 ``` r
-paste0("Corraletion between cell tower counts and WorkDay population at Local Authority District Level (England and Wales only): ", round(cor(LAD_EN$NUMPOINTS, LAD_EN$wd_pop), 2)) # 0.86
+# Corraletion between cell tower counts and WorkDay population at Local Authority District Level (England and Wales only)
+round(cor(LAD_EN$NUMPOINTS, LAD_EN$wd_pop), 2) # 0.86
 ```
 
-    ## [1] "Corraletion between cell tower counts and WorkDay population at Local Authority District Level (England and Wales only): 0.86"
+    ## [1] 0.86
 
 The next Figure shows the distribution across all LADs of the number of cell-towers per 1000 residents. The mean is around 23 cell towers per 1000 residents but there is one outlier having 502 cell towers in the City of London LAD, an area with a much larger workday population compared with its residential population.
 
@@ -155,7 +125,7 @@ ggplot(LAD, aes(x_1000_res, y=..density..)) +
   xlab("N° cell towers x1000 residents") 
 ```
 
-![](OpenCellID_analysis_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-8-1.png)
+![](OpenCellID_analysis_files/figure-markdown_github-ascii_identifiers/LAD%20x1000%20res%20histogram-1.png)
 
 ``` r
 paste0("Summary Statistics")
@@ -198,16 +168,18 @@ head(London_LAD)
     ## 6 324.857   16.97054
 
 ``` r
-paste0("Corraletion between cell tower counts and Resiential population at Local Authority District Level (London only): ", round(cor(London_LAD$NUMPOINTS, London_LAD$population_2015), 2)) # 0.37
+# Corraletion between cell tower counts and Resiential population at Local Authority District Level (London only)
+round(cor(London_LAD$NUMPOINTS, London_LAD$population_2015), 2) # 0.37
 ```
 
-    ## [1] "Corraletion between cell tower counts and Resiential population at Local Authority District Level (London only): 0.37"
+    ## [1] 0.37
 
 ``` r
-paste0("Corraletion between cell tower counts and WorkDay population at Local Authority District Level (London only): ", round(cor(London_LAD$NUMPOINTS, London_LAD$wd_pop), 2)) # 0.91
+# Corraletion between cell tower counts and WorkDay population at Local Authority District Level (London only)
+round(cor(London_LAD$NUMPOINTS, London_LAD$wd_pop), 2) # 0.91
 ```
 
-    ## [1] "Corraletion between cell tower counts and WorkDay population at Local Authority District Level (London only): 0.91"
+    ## [1] 0.91
 
 Analysis at Middle Super Output Area (MSOA) level
 -------------------------------------------------
@@ -256,13 +228,14 @@ ggplot(MSOA_EW, aes(NP, res)) +
             aes(NP, res,label=MSOA11NM), check_overlap = TRUE,hjust=-0.08, vjust=0.2, size = 4)
 ```
 
-![](OpenCellID_analysis_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-13-1.png)
+![](OpenCellID_analysis_files/figure-markdown_github-ascii_identifiers/MSOA%20EW%20res%20vs.%20ct-1.png)
 
 ``` r
-paste0("Corraletion between cell tower counts and Resiential population at MSOA Level (England & Wales): ", round(cor(MSOA_EW$NUMPOINTS, MSOA_EW$mid_2015_res_pop),2)) # 0.18
+# Corraletion between cell tower counts and Resiential population at MSOA Level (England & Wales)
+round(cor(MSOA_EW$NUMPOINTS, MSOA_EW$mid_2015_res_pop),2) # 0.18
 ```
 
-    ## [1] "Corraletion between cell tower counts and Resiential population at MSOA Level (England & Wales): 0.18"
+    ## [1] 0.18
 
 Although workday population is better correlated with cell-tower counts, this correlation is still weak at 0.51.
 
@@ -279,13 +252,14 @@ ggplot(MSOA_EW, aes(NP, wd)) +
             aes(NP, wd,label=MSOA11NM), check_overlap = TRUE,hjust=1.1, size = 4)
 ```
 
-![](OpenCellID_analysis_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-15-1.png)
+![](OpenCellID_analysis_files/figure-markdown_github-ascii_identifiers/MSOA%20EW%20wd%20vs.%20ct-1.png)
 
 ``` r
-paste0("Corraletion between cell tower counts and WorkDay population at Local Authority District Level (London only): ", round(cor(MSOA_EW$NUMPOINTS, MSOA_EW$wd_pop), 2)) # 0.51
+# Corraletion between cell tower counts and WorkDay population at Local Authority District Level (London only)
+round(cor(MSOA_EW$NUMPOINTS, MSOA_EW$wd_pop), 2) # 0.51
 ```
 
-    ## [1] "Corraletion between cell tower counts and WorkDay population at Local Authority District Level (London only): 0.51"
+    ## [1] 0.51
 
 The poor correlation between population density and cell tower density across the country is possibly due to the siting of large numbers of cell towers on major transport routes, typically in areas of low population density, as in Eden LAD identified above.
 
@@ -295,7 +269,16 @@ A high population density exists across the whole Greater London area and even t
 # London MSOAs
 MSOAs_L = read.table("Lookups/MSOA_London.txt", header = F)
 MSOA_London = filter(MSOA_EW, MSOA11CD %in% MSOAs_L$V1)
+head(MSOA_London)
 ```
+
+    ##     MSOA11NM  MSOA11CD wd_pop NUMPOINTS mid_2015_res_pop    NP   res    wd
+    ## 1 Camden 001 E02000166   7082       288             8554 0.288 8.554 7.082
+    ## 2 Camden 002 E02000167   7453       341             8596 0.341 8.596 7.453
+    ## 3 Camden 003 E02000168   9209       185             9000 0.185 9.000 9.209
+    ## 4 Camden 004 E02000169   6140       203             8524 0.203 8.524 6.140
+    ## 5 Camden 005 E02000170   5615       124             9127 0.124 9.127 5.615
+    ## 6 Camden 006 E02000171   5900        92             8667 0.092 8.667 5.900
 
 ``` r
 ggplot(MSOA_London, aes(NP, wd)) + geom_point(size = 2, alpha = 0.8, stroke= 0) + stat_smooth(method = "loess") +
@@ -308,19 +291,11 @@ ggplot(MSOA_London, aes(NP, wd)) + geom_point(size = 2, alpha = 0.8, stroke= 0) 
             aes(NP, wd,label=MSOA11NM), check_overlap = TRUE,hjust=1.1, size = 4)
 ```
 
-![](OpenCellID_analysis_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-18-1.png)
+![](OpenCellID_analysis_files/figure-markdown_github-ascii_identifiers/MSOA%20London%20wd%20vs.%20ct-1.png)
 
-``` r
-paste0("Corraletion between cell tower counts and Resiential population at MSOA Level (London only): ", round(cor(MSOA_London$NUMPOINTS, MSOA_London$mid_2015_res_pop), 2)) # 0.15
-```
+    ## [1] 0.15
 
-    ## [1] "Corraletion between cell tower counts and Resiential population at MSOA Level (London only): 0.15"
-
-``` r
-paste0("Corraletion between cell tower counts and WorkDay population at MSOA Level (London only): ", round(cor(MSOA_London$NUMPOINTS, MSOA_London$wd_pop), 2)) # 0.86
-```
-
-    ## [1] "Corraletion between cell tower counts and WorkDay population at MSOA Level (London only): 0.86"
+    ## [1] 0.86
 
 Analysis for Lower Super Output Areas (LSOAs) in London only
 ------------------------------------------------------------
@@ -364,21 +339,23 @@ ggplot(LSOA_London, aes(NP, wd)) +
             aes(NP, wd, label=LSOA11NM), check_overlap = TRUE, hjust=1.1, size = 4)
 ```
 
-![](OpenCellID_analysis_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-21-1.png)
-
-``` r
-paste0("Corraletion between cell tower counts and Resiential population at LSOA Level (London only): ", round(cor(LSOA_London$NUMPOINTS, LSOA_London$mid_2015_res_pop), 2)) # 0.14
-```
-
-    ## [1] "Corraletion between cell tower counts and Resiential population at LSOA Level (London only): 0.14"
-
-``` r
-paste0("Corraletion between cell tower counts and WorkDay population at LSOA Level (London only): ", round(cor(LSOA_London$NUMPOINTS, LSOA_London$wd_pop), 2)) # 0.82
-```
-
-    ## [1] "Corraletion between cell tower counts and WorkDay population at LSOA Level (London only): 0.82"
+![](OpenCellID_analysis_files/figure-markdown_github-ascii_identifiers/LSOA%20London%20wd%20vs.%20ct-1.png)
 
 Correlation with cell tower density across London LSOAs remains high at 0.82. This compares with 0.14 for similar correlation with residential population, indicating that cell towers are more likely to be positioned to cater for the expected peak demand for mobile telephony which, in London, are more likely to arise from populations present during the workday.
+
+``` r
+# Corraletion between cell tower counts and Resiential population at LSOA Level (London only)
+round(cor(LSOA_London$NUMPOINTS, LSOA_London$mid_2015_res_pop), 2) # 0.14
+```
+
+    ## [1] 0.14
+
+``` r
+# Corraletion between cell tower counts and WorkDay population at LSOA Level (London only)
+round(cor(LSOA_London$NUMPOINTS, LSOA_London$wd_pop), 2) # 0.82
+```
+
+    ## [1] 0.82
 
 ------------------------------------------------------------------------
 
