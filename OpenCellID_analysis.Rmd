@@ -1,10 +1,11 @@
----
-title: 'Part 1: Comparing the density of mobile phone cell towers with population:
-  Analysis'
-output:
-  html_notebook: default
-  html_document: default
----
+---  
+title: "Part 1: Comparing the density of mobile phone cell towers with population: Analysis"  
+author: "Alessandra Sozzi"  
+date: "`r format(Sys.Date())`"
+output:  github_document
+---  
+
+# Part 1: Comparing the density of mobile phone cell towers with population: Analysis
 
 This notebook follows along the analysis produced for the publication "Comparing the density of mobile phone cell towers with population" part of the [ONS Methodology Working Paper Series]()
 
