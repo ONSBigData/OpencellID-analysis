@@ -9,7 +9,7 @@ This notebook follows along the 3.4 Section produced for the publication "Compar
 
 The relationship between official estimates of UK residential and [workday population](https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/articles/theworkdaypopulationofenglandandwales/2013-10-31#data)<sup>1</sup> density and the density of mobile phone cell-towers is investigated using freely available and open-sourced data on cell-tower locations from [OpenCellID](https://opencellid.org/).
 
-```{r}
+```{r, message=FALSE, warning=FALSE, include=FALSE}
 source("utils.R")
 ```
 
@@ -27,7 +27,7 @@ ct
 
 Although Heathrow Terminals 2 & 3 have a high density of cell towers, it is of note that higher densities are observed at major road junctions around the airport. This may be attributed to it being cheaper to site cell-towers on roads rather than in the airport. It may also be that larger cell-towers are allowed on roads than around the built environment, that there are very high numbers of people expected at these junctions, or possibly that OpenCellID receives GPS location information from travellers on these roads rather than in the airport itself. 
 
-```{r}
+```{r HeathrowAirportKDE, fig.height=10, fig.width=15, message=FALSE, warning=FALSE}
 draw_ggmap(location = "Heathrow Airport", zoom = 13, ct)
 ```
 
@@ -37,25 +37,25 @@ This technique was also applied to areas of London containing the major mainline
 The next plots reveal the high density of cell towers positioned in some of London’s main stations.
 
 ####Waterloo Train Station
-```{r}
+```{r WaterlooTrainStationKDE, fig.height=10, fig.width=15, message=FALSE, warning=FALSE}
 draw_ggmap(location = "Waterloo Train Station, London", 
            zoom = 15, ct, scale_color_lims = c(0, 7000))
 ```
 
 ####King's Cross Train Station
-```{r}
+```{r KingsCrossTrainStationKDE, fig.height=10, fig.width=15, message=FALSE, warning=FALSE}
 draw_ggmap(location = "King's Cross Train Station, London", zoom = 15, 
            ct, scale_color_lims = c(0, 7000))
 ```
 
 ####Liverpool Street Train Station
-```{r}
+```{r LiverpoolStreetTrainStationKDE, fig.height=10, fig.width=15, message=FALSE, warning=FALSE}
 draw_ggmap(location = "Liverpool Street Train Station, London", zoom = 15, 
            ct, scale_color_lims = c(0, 7000))
 ```
 
 ####Victoria Train Station
-```{r}
+```{r VictoriaTrainStation, fig.height=10, fig.width=15, message=FALSE, warning=FALSE}
 draw_ggmap(location = "Victoria Train Station, London", zoom = 15, 
            ct, scale_color_lims = c(0, 7000))
 ```
