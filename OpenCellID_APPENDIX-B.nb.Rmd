@@ -5,11 +5,11 @@ date: "`r format(Sys.Date())`"
 output:  github_document
 ---
 
-This notebook follows along the APPENDIX B produced for the publication "Comparing the density of mobile phone cell towers with population" part of the [ONS Methodology Working Paper Series]()
+This notebook follows along the APPENDIX B produced for the publication *Comparing the density of mobile phone cell towers with population* part of the [ONS Methodology Working Paper Series]()
 
 The relationship between official estimates of UK residential and [workday population](https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/articles/theworkdaypopulationofenglandandwales/2013-10-31#data)<sup>1</sup> density and the density of mobile phone cell-towers is investigated using freely available and open-sourced data on cell-tower locations from [OpenCellID](https://opencellid.org/).
 
-```{r}
+```{r, message=FALSE, warning=FALSE, include=FALSE}
 # Import Libraries 
 library(dplyr)
 library(reshape2)
@@ -27,7 +27,7 @@ Data from the OpenCellID database was retrieved for research on the 16 January 2
 
 ```{r}
 ct = read.table("data/cell_towers2017.csv", header = T, sep = ",", stringsAsFactors = F)
-ct
+head(ct)
 ```
 
 The next figure highlights the cumulative number of how many cell towers per month have been created (inserted for the first time in the database) and updated (excluding those cell towers with no update) up to January 2017.
@@ -40,7 +40,7 @@ by_create = count(ct, c_date)
 by_update = ct %>% group_by(u_date) %>% summarise(n = length(cell[samples > 1]))
 ``` 
 
-```{r}
+```{r CreatedUpdated, fig.height=10, fig.width=15, message=FALSE, warning=FALSE}
 cumsummed = by_create %>% 
   full_join(by_update, 
             by = c("c_date" = "u_date"), 
@@ -73,38 +73,38 @@ ct = ct %>%
   mutate( year = format(c_date, "%Y"))
 ```
 
-```{r}
+```{r PlotYear2008, fig.height=12, fig.width=15, message=FALSE, warning=FALSE}
 plor_year(2008)
 ```
-```{r}
+```{r PlotYear2009, fig.height=10, fig.width=15, message=FALSE, warning=FALSE}
 plor_year(2009)
 ```
 
-```{r}
+```{r PlotYear2010, fig.height=12, fig.width=15, message=FALSE, warning=FALSE}
 plor_year(2010)
 ```
 
-```{r}
+```{r PlotYear2011, fig.height=12, fig.width=15, message=FALSE, warning=FALSE}
 plor_year(2011)
 ```
 
-```{r}
+```{r PlotYear2012, fig.height=10, fig.width=15, message=FALSE, warning=FALSE}
 plor_year(2012)
 ```
 
-```{r}
+```{r PlotYear2013, fig.height=10, fig.width=15, message=FALSE, warning=FALSE}
 plor_year(2013)
 ```
 
-```{r}
+```{r PlotYear2014, fig.height=10, fig.width=15, message=FALSE, warning=FALSE}
 plor_year(2014)
 ```
 
-```{r}
+```{r PlotYear2015, fig.height=10, fig.width=15, message=FALSE, warning=FALSE}
 plor_year(2015)
 ```
 
-```{r}
+```{r PlotYear2016, fig.height=10, fig.width=15, message=FALSE, warning=FALSE}
 plor_year(2016)
 ```
 
