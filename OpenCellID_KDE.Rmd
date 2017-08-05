@@ -19,7 +19,7 @@ In [Kernel Density Estimation](https://en.wikipedia.org/wiki/Kernel_density_esti
 
 ```{r}
 ct = read.csv("data/London_ct.csv", header = T, sep = ",", stringsAsFactors = F)
-ct
+head(ct)
 ```
 
 
