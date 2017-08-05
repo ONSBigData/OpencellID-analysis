@@ -1,6 +1,8 @@
 ---
 title: "Part2: Kernel Density estimation"
-output: html_notebook
+author: "Alessandra Sozzi"  
+date: "`r format(Sys.Date())`"
+output:  github_document
 ---
 
 This notebook follows along the 3.4 Section produced for the publication "Comparing the density of mobile phone cell towers with population" part of the [ONS Methodology Working Paper Series]()
