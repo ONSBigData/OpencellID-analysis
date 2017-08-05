@@ -1,6 +1,8 @@
 ---
 title: "Part 3: APPENDIX B: Investigation into quality of OpencellID data"
-output: html_notebook
+author: "Alessandra Sozzi"  
+date: "`r format(Sys.Date())`"
+output:  github_document
 ---
 
 This notebook follows along the APPENDIX B produced for the publication "Comparing the density of mobile phone cell towers with population" part of the [ONS Methodology Working Paper Series]()
