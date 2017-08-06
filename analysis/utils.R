@@ -27,7 +27,7 @@ draw_ggmap = function(location, zoom, data, scale_color_lims=NULL) {
 
 UK = get_map(location = c(-4.121072, 53.919044), zoom = 6, maptype = "roadmap")
 
-plor_year = function(y) {
+plor_year = function(y, ct) {
   '
   Function to draw a ggmap of the UK with the yearly data points on top of it
   y: year of interest
