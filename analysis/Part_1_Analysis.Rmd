@@ -1,11 +1,11 @@
----  
-title: "Part 1: Comparing the density of mobile phone cell towers with population: Analysis"  
+---
+title: "Part 1: Comparing the density of mobile phone cell towers with population: Analysis"
 author: "Alessandra Sozzi"  
 date: "`r format(Sys.Date())`"
 output:  github_document
----  
+---
 
-This notebook follows along the analysis produced for the publication "Comparing the density of mobile phone cell towers with population" part of the [ONS Methodology Working Paper Series]()
+This notebook follows along the analysis produced for the publication *Comparing the density of mobile phone cell towers with population* part of the [ONS Methodology Working Paper Series]()
 
 The relationship between official estimates of UK residential and [workday population](https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/articles/theworkdaypopulationofenglandandwales/2013-10-31#data)<sup>1</sup> density and the density of mobile phone cell-towers is investigated using freely available and open-sourced data on cell-tower locations from [OpenCellID](https://opencellid.org/).
 
@@ -19,25 +19,25 @@ theme_set(new_theme)
 ```
 
 
-## OpenCellID 
+## OpenCellID Data
 
 The next table illustrates a snapshot of the OpenCellID database updated at 16 January 2017. 
 
 Multiple GPS measurements referring to the same antenna are averaged to estimate its location more accurately. The main fields are: mobile technology (radio), mobile country code (mcc)<sup>2</sup>, mobile network (net), cell, longitude (lon), latitude (lat), range, samples (number of measurements), changeable (chg), created (timestamp of first measurement), updated (timestamp of last measurement). More detail on the definitions of these fields are in Appendix A of the publication.
 
 ```{r}
-ct = read.table("Data/cell_towers2017.csv", header = T, sep = ",", stringsAsFactors = F)
+ct = read.table("data/cell_towers2017.csv", header = T, sep = ",", stringsAsFactors = F)
 head(ct)
 ```
 
 The number of cell-towers associated with UK MCCs and listed in the OpenCellID database as per date 16 January 2017 is 1,427,795.
 
-##Analysis at Local Authority District (LAD) level 
+## Analysis at Local Authority District (LAD) level 
 
 The latitude and longitude coordinates of 1,382,999 cell-towers were mapped<sup>2</sup> into [2015 UK mainland LAD boundaries](http://geoportal.statistics.gov.uk/datasets?q=LAD%20Boundaries%202015&sort=name), the remaining 44,796 cell-towers being unallocated as they were based in Northern Ireland or their estimated position was in water around the UK coastline. 
 
 ```{r}
-LAD = read.csv("Data/LAD_UK.csv", header = T, sep = ",", stringsAsFactors = F)
+LAD = read.csv("data/LAD_UK.csv", header = T, sep = ",", stringsAsFactors = F)
 LAD = mutate(LAD, 
        NP = NUMPOINTS / 1000,
        res = population_2015 / 1000,
@@ -88,7 +88,7 @@ ggplot(LAD, aes(x_1000_res, y=..density..)) +
 ```
 
 ```{r, message=FALSE, warning=FALSE}
-paste0("Summary Statistics")
+# Summary Statistics
 summary(LAD['x_1000_res'])
 ```
 
@@ -172,7 +172,7 @@ A high population density exists across the whole Greater London area and even t
 
 ```{r}
 # London MSOAs
-MSOAs_L = read.table("Lookups/MSOA_London.txt", header = F)
+MSOAs_L = read.table("lookups/MSOA_London.txt", header = F)
 MSOA_London = filter(MSOA_EW, MSOA11CD %in% MSOAs_L$V1)
 head(MSOA_London)
 ```
@@ -201,7 +201,7 @@ round(cor(MSOA_London$NUMPOINTS, MSOA_London$wd_pop), 2) # 0.86
 Since the distortion caused by transport routes may not be as pronounced in London, a more focussed analysis was conducted in this region to see if correlations between cell towers and population density might be good at even smaller geographies, such as LSOA.
 
 ```{r}
-LSOA_London = read.csv("Data/LSOA_London_wd_res_ct.csv", header = T, sep = ",", stringsAsFactors = F)
+LSOA_London = read.csv("data/LSOA_London_wd_res_ct.csv", header = T, sep = ",", stringsAsFactors = F)
 LSOA_London = mutate(LSOA_London, 
        NP = NUMPOINTS / 1000,
        res = mid_2015_res_pop / 1000,

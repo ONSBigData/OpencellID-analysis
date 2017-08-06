@@ -13,7 +13,7 @@ The relationship between official estimates of UK residential and [workday popul
 # Import Libraries 
 library(dplyr)
 library(reshape2)
-source("utils.R")
+source("analysis/utils.R")
 
 new_theme = theme_get() + theme(axis.text = element_text(size=14),
                                 axis.title = element_text(size=14))
@@ -74,38 +74,38 @@ ct = ct %>%
 ```
 
 ```{r PlotYear2008, fig.height=12, fig.width=15, message=FALSE, warning=FALSE}
-plor_year(2008)
+plor_year(2008, ct)
 ```
 ```{r PlotYear2009, fig.height=10, fig.width=15, message=FALSE, warning=FALSE}
-plor_year(2009)
+plor_year(2009, ct)
 ```
 
 ```{r PlotYear2010, fig.height=12, fig.width=15, message=FALSE, warning=FALSE}
-plor_year(2010)
+plor_year(2010, ct)
 ```
 
 ```{r PlotYear2011, fig.height=12, fig.width=15, message=FALSE, warning=FALSE}
-plor_year(2011)
+plor_year(2011, ct)
 ```
 
 ```{r PlotYear2012, fig.height=10, fig.width=15, message=FALSE, warning=FALSE}
-plor_year(2012)
+plor_year(2012, ct)
 ```
 
 ```{r PlotYear2013, fig.height=10, fig.width=15, message=FALSE, warning=FALSE}
-plor_year(2013)
+plor_year(2013, ct)
 ```
 
 ```{r PlotYear2014, fig.height=10, fig.width=15, message=FALSE, warning=FALSE}
-plor_year(2014)
+plor_year(2014, ct)
 ```
 
 ```{r PlotYear2015, fig.height=10, fig.width=15, message=FALSE, warning=FALSE}
-plor_year(2015)
+plor_year(2015, ct)
 ```
 
 ```{r PlotYear2016, fig.height=10, fig.width=15, message=FALSE, warning=FALSE}
-plor_year(2016)
+plor_year(2016, ct)
 ```
 
 In the 2015 and 2016 maps there are a small number of cell towers positioned at sea. These could represent cell towers close to the coast that are connected to on journeys across water. The GPS signal sent to OpenCellID will be that representing the mobile user’s exact position. Another possibility, is that ferries/ships started to have their own cell tower/antennae or that contributors to OpenCellID have just made an observation of these cell-towers.   
