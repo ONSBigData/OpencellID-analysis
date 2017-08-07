@@ -1,7 +1,7 @@
 ---
 title: "Part2: Kernel Density estimation"
 author: "Alessandra Sozzi"  
-date: "2017-08-06"
+date: "2017-08-07"
 output:  github_document
 ---
 
