@@ -52,7 +52,7 @@ Using [2015 mid-year residential population estimates](https://www.ons.gov.uk/pe
 round(cor(LAD$NUMPOINTS, LAD$population_2015), 2) # 0.84
 ```
 
-```{r UK LAD res vs. ct, fig.height=10, fig.width=15, message=FALSE, warning=FALSE}
+```{r UK_LAD_residential_vs_cellTower, fig.height=10, fig.width=15, message=FALSE, warning=FALSE}
 #  Scatter plot of cell tower counts vs. residential population (LADs across UK mainland)
 ggplot(LAD, aes(NP, res)) +
   geom_point(size = 2, alpha = 0.8, stroke= 0) + 
@@ -79,7 +79,7 @@ round(cor(LAD_EN$NUMPOINTS, LAD_EN$wd_pop), 2) # 0.86
 
 The next Figure shows the distribution across all LADs of the number of cell-towers per 1000 residents. The mean is around 23 cell towers per 1000 residents but there is one outlier having 502 cell towers in the City of London LAD, an area with a much larger workday population compared with its residential population.
 
-```{r LAD x1000 res histogram, fig.height=10, fig.width=15, message=FALSE, warning=FALSE}
+```{r UK_LAD_cellTowers_x1000_residents_histogram, fig.height=10, fig.width=15, message=FALSE, warning=FALSE}
 ggplot(LAD, aes(x_1000_res, y=..density..)) + 
   geom_histogram(stat = "bin", bins = 200, col="gray", 
                  fill="#ef3b2c") +
@@ -124,7 +124,7 @@ head(MSOA_EW)
 
 The next Figure shows that there is no linear relationship between cell-tower counts and residential population across MSOAs in England and Wales: the correlation is 0.18. 
 
-```{r MSOA EW res vs. ct, fig.height=10, fig.width=15, message=FALSE, warning=FALSE}
+```{r EW_MSOA_residential_vs_cellTower, fig.height=10, fig.width=15, message=FALSE, warning=FALSE}
 # Number of cell towers per MSOA vs. number of residents per MSOA. England and Wales
 ggplot(MSOA_EW, aes(NP, res)) + 
   geom_point(size = 2, alpha = 0.8, stroke= 0) + 
@@ -148,7 +148,7 @@ round(cor(MSOA_EW$NUMPOINTS, MSOA_EW$mid_2015_res_pop),2) # 0.18
 
 Although workday population is better correlated with cell-tower counts, this correlation is still weak at 0.51.
 
-```{r MSOA EW wd vs. ct, fig.height=10, fig.width=15, message=FALSE, warning=FALSE}
+```{r EW_MSOA_workday_vs_cellTower, fig.height=10, fig.width=15, message=FALSE, warning=FALSE}
 # Number of cell towers per MSOA vs. number of workday population per MSOA. England and Wales
 ggplot(MSOA_EW, aes(NP, wd)) + 
   geom_point(size = 2, alpha = 0.8, stroke= 0) + 
@@ -177,7 +177,7 @@ MSOA_London = filter(MSOA_EW, MSOA11CD %in% MSOAs_L$V1)
 head(MSOA_London)
 ```
 
-```{r MSOA London wd vs. ct, fig.height=10, fig.width=15, message=FALSE, warning=FALSE}
+```{r London_MSOA_workday_vs_cellTower, fig.height=10, fig.width=15, message=FALSE, warning=FALSE}
 ggplot(MSOA_London, aes(NP, wd)) + geom_point(size = 2, alpha = 0.8, stroke= 0) + stat_smooth(method = "loess") +
   xlab("MSOA London Cell Towers count in '000s") +
   ylab("MSOA London Workday Population in '000s") +
@@ -209,7 +209,7 @@ LSOA_London = mutate(LSOA_London,
 head(LSOA_London)
 ```
 
-```{r LSOA London wd vs. ct, fig.height=10, fig.width=15, message=FALSE, warning=FALSE}
+```{r London_LSOA_workday_vs_cellTower, fig.height=10, fig.width=15, message=FALSE, warning=FALSE}
 ggplot(LSOA_London, aes(NP, wd)) + 
   geom_point(size = 2, alpha = 0.8, stroke= 0) + 
   stat_smooth(method = "loess") +
