@@ -89,7 +89,7 @@ ggplot(LAD, aes(NP, res)) +
   ylab("LAD UK mainland Residential Population in '000s") 
 ```
 
-![plot of chunk UK LAD res vs. ct](figures//UK LAD res vs. ct-1.png)
+![plot of chunk UK_LAD_residential_vs_cellTower](figures//UK_LAD_residential_vs_cellTower-1.png)
 
 Within LADs in England and Wales only, correlation between cell-tower density and residential population is 0.83 and with workday population is 0.86. 
 
@@ -146,7 +146,7 @@ ggplot(LAD, aes(x_1000_res, y=..density..)) +
   xlab("N° cell towers x1000 residents") 
 ```
 
-![plot of chunk LAD x1000 res histogram](figures//LAD x1000 res histogram-1.png)
+![plot of chunk UK_LAD_cellTowers_x1000_residents_histogram](figures//UK_LAD_cellTowers_x1000_residents_histogram-1.png)
 
 
 ```r
@@ -259,7 +259,7 @@ ggplot(MSOA_EW, aes(NP, res)) +
             aes(NP, res,label=MSOA11NM), check_overlap = TRUE,hjust=-0.08, vjust=0.2, size = 4)
 ```
 
-![plot of chunk MSOA EW res vs. ct](figures//MSOA EW res vs. ct-1.png)
+![plot of chunk EW_MSOA_residential_vs_cellTower](figures//EW_MSOA_residential_vs_cellTower-1.png)
 
 
 ```r
@@ -288,7 +288,7 @@ ggplot(MSOA_EW, aes(NP, wd)) +
             aes(NP, wd,label=MSOA11NM), check_overlap = TRUE,hjust=1.1, size = 4)
 ```
 
-![plot of chunk MSOA EW wd vs. ct](figures//MSOA EW wd vs. ct-1.png)
+![plot of chunk EW_MSOA_workday_vs_cellTower](figures//EW_MSOA_workday_vs_cellTower-1.png)
 
 
 ```r
@@ -334,7 +334,7 @@ ggplot(MSOA_London, aes(NP, wd)) + geom_point(size = 2, alpha = 0.8, stroke= 0) 
             aes(NP, wd,label=MSOA11NM), check_overlap = TRUE,hjust=1.1, size = 4)
 ```
 
-![plot of chunk MSOA London wd vs. ct](figures//MSOA London wd vs. ct-1.png)
+![plot of chunk London_MSOA_workday_vs_cellTower](figures//London_MSOA_workday_vs_cellTower-1.png)
 
 
 ```
@@ -390,7 +390,7 @@ ggplot(LSOA_London, aes(NP, wd)) +
             aes(NP, wd, label=LSOA11NM), check_overlap = TRUE, hjust=1.1, size = 4)
 ```
 
-![plot of chunk LSOA London wd vs. ct](figures//LSOA London wd vs. ct-1.png)
+![plot of chunk London_LSOA_workday_vs_cellTower](figures//London_LSOA_workday_vs_cellTower-1.png)
 
 Correlation with cell tower density across London LSOAs remains high at 0.82. This compares with 0.14 for similar correlation with residential population, indicating that cell towers are more likely to be positioned to cater for the expected peak demand for mobile telephony which, in London, are more likely to arise from populations present during the workday.
 
