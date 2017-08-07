@@ -73,18 +73,18 @@ ct = ct %>%
   mutate( year = format(c_date, "%Y"))
 ```
 
-```{r PlotYear2008, fig.height=12, fig.width=15, message=FALSE, warning=FALSE}
+```{r PlotYear2008, fig.height=10, fig.width=15, message=FALSE, warning=FALSE}
 plor_year(2008, ct)
 ```
 ```{r PlotYear2009, fig.height=10, fig.width=15, message=FALSE, warning=FALSE}
 plor_year(2009, ct)
 ```
 
-```{r PlotYear2010, fig.height=12, fig.width=15, message=FALSE, warning=FALSE}
+```{r PlotYear2010, fig.height=10, fig.width=15, message=FALSE, warning=FALSE}
 plor_year(2010, ct)
 ```
 
-```{r PlotYear2011, fig.height=12, fig.width=15, message=FALSE, warning=FALSE}
+```{r PlotYear2011, fig.height=10, fig.width=15, message=FALSE, warning=FALSE}
 plor_year(2011, ct)
 ```
 
