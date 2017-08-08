@@ -1,7 +1,7 @@
 ---
 title: "Part 3: APPENDIX B: Investigation into quality of OpencellID data"
 author: "Alessandra Sozzi"  
-date: "2017-08-07"
+date: "2017-08-08"
 output:  github_document
 ---
 
@@ -18,7 +18,6 @@ Data from the OpenCellID database was retrieved for research on the 16 January 2
 
 
 ```r
-ct = read.table("data/cell_towers2017.csv", header = T, sep = ",", stringsAsFactors = F)
 head(ct)
 ```
 
@@ -43,11 +42,11 @@ The next figure highlights the cumulative number of how many cell towers per mon
 
 
 ```r
-ct = ct %>% 
+new_ct = ct %>% 
   mutate( c_date = monthStart(created),
           u_date = monthStart(updated))
-by_create = count(ct, c_date)
-by_update = ct %>% group_by(u_date) %>% summarise(n = length(cell[samples > 1]))
+by_create = count(new_ct, c_date)
+by_update = new_ct %>% group_by(u_date) %>% summarise(n = length(cell[samples > 1]))
 ```
 
 
@@ -83,68 +82,68 @@ For each year from 2008 to 2016 all newly registered cell towers were plotted<su
 
 
 ```r
-ct = ct %>% 
+new_ct = new_ct %>% 
   mutate( year = format(c_date, "%Y"))
 ```
 
 
 ```r
-plor_year(2008, ct)
+plor_year(2008, new_ct)
 ```
 
 ![plot of chunk PlotYear2008](figures//PlotYear2008-1.png)
 
 ```r
-plor_year(2009, ct)
+plor_year(2009, new_ct)
 ```
 
 ![plot of chunk PlotYear2009](figures//PlotYear2009-1.png)
 
 
 ```r
-plor_year(2010, ct)
+plor_year(2010, new_ct)
 ```
 
 ![plot of chunk PlotYear2010](figures//PlotYear2010-1.png)
 
 
 ```r
-plor_year(2011, ct)
+plor_year(2011, new_ct)
 ```
 
 ![plot of chunk PlotYear2011](figures//PlotYear2011-1.png)
 
 
 ```r
-plor_year(2012, ct)
+plor_year(2012, new_ct)
 ```
 
 ![plot of chunk PlotYear2012](figures//PlotYear2012-1.png)
 
 
 ```r
-plor_year(2013, ct)
+plor_year(2013, new_ct)
 ```
 
 ![plot of chunk PlotYear2013](figures//PlotYear2013-1.png)
 
 
 ```r
-plor_year(2014, ct)
+plor_year(2014, new_ct)
 ```
 
 ![plot of chunk PlotYear2014](figures//PlotYear2014-1.png)
 
 
 ```r
-plor_year(2015, ct)
+plor_year(2015, new_ct)
 ```
 
 ![plot of chunk PlotYear2015](figures//PlotYear2015-1.png)
 
 
 ```r
-plor_year(2016, ct)
+plor_year(2016, new_ct)
 ```
 
 ![plot of chunk PlotYear2016](figures//PlotYear2016-1.png)
