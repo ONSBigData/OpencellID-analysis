@@ -11,6 +11,7 @@ The relationship between official estimates of UK residential and [workday popul
 
 ```{r, message=FALSE, warning=FALSE, include=FALSE}
 source("analysis/utils.R")
+load("data.Rdata")
 ```
 
 Using the cell-tower location measurements and the [ggmap](https://cran.r-project.org/web/packages/ggmap/ggmap.pdf) library<sup>2</sup>, a density estimation technique was used to make inferences about the underlying probability density functions. 
@@ -18,8 +19,7 @@ Using the cell-tower location measurements and the [ggmap](https://cran.r-projec
 In [Kernel Density Estimation](https://en.wikipedia.org/wiki/Kernel_density_estimation), the contribution of each data point is smoothed out from a single point into a region of space surrounding it. Aggregating the individually smoothed contributions gives an overall picture of the structure of the data and its density function. 
 
 ```{r}
-ct = read.csv("data/London_ct.csv", header = T, sep = ",", stringsAsFactors = F)
-head(ct)
+head(London_ct)
 ```
 
 
@@ -28,7 +28,7 @@ head(ct)
 Although Heathrow Terminals 2 & 3 have a high density of cell towers, it is of note that higher densities are observed at major road junctions around the airport. This may be attributed to it being cheaper to site cell-towers on roads rather than in the airport. It may also be that larger cell-towers are allowed on roads than around the built environment, that there are very high numbers of people expected at these junctions, or possibly that OpenCellID receives GPS location information from travellers on these roads rather than in the airport itself. 
 
 ```{r HeathrowAirportKDE, fig.height=10, fig.width=15, message=FALSE, warning=FALSE}
-draw_ggmap(location = "Heathrow Airport", zoom = 13, ct)
+draw_ggmap(location = "Heathrow Airport", zoom = 13, London_ct)
 ```
 
 ### London’s main stations
@@ -39,25 +39,25 @@ The next plots reveal the high density of cell towers positioned in some of Lond
 #### Waterloo Train Station
 ```{r WaterlooTrainStationKDE, fig.height=10, fig.width=15, message=FALSE, warning=FALSE}
 draw_ggmap(location = "Waterloo Train Station, London", 
-           zoom = 15, ct, scale_color_lims = c(0, 7000))
+           zoom = 15, London_ct, scale_color_lims = c(0, 7000))
 ```
 
 #### King's Cross Train Station
 ```{r KingsCrossTrainStationKDE, fig.height=10, fig.width=15, message=FALSE, warning=FALSE}
 draw_ggmap(location = "King's Cross Train Station, London", zoom = 15, 
-           ct, scale_color_lims = c(0, 7000))
+           London_ct, scale_color_lims = c(0, 7000))
 ```
 
 #### Liverpool Street Train Station
 ```{r LiverpoolStreetTrainStationKDE, fig.height=10, fig.width=15, message=FALSE, warning=FALSE}
 draw_ggmap(location = "Liverpool Street Train Station, London", zoom = 15, 
-           ct, scale_color_lims = c(0, 7000))
+           London_ct, scale_color_lims = c(0, 7000))
 ```
 
 #### Victoria Train Station
 ```{r VictoriaTrainStationKDE, fig.height=10, fig.width=15, message=FALSE, warning=FALSE}
 draw_ggmap(location = "Victoria Train Station, London", zoom = 15, 
-           ct, scale_color_lims = c(0, 7000))
+           London_ct, scale_color_lims = c(0, 7000))
 ```
 
 ---

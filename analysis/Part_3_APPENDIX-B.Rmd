@@ -18,6 +18,7 @@ source("analysis/utils.R")
 new_theme = theme_get() + theme(axis.text = element_text(size=14),
                                 axis.title = element_text(size=14))
 theme_set(new_theme)
+load("data.Rdata")
 ```
 
 
@@ -26,18 +27,17 @@ Each cell tower in the OpenCellID database has a timestamp representing the date
 Data from the OpenCellID database was retrieved for research on the 16 January 2017.
 
 ```{r}
-ct = read.table("data/cell_towers2017.csv", header = T, sep = ",", stringsAsFactors = F)
 head(ct)
 ```
 
 The next figure highlights the cumulative number of how many cell towers per month have been created (inserted for the first time in the database) and updated (excluding those cell towers with no update) up to January 2017.
 
 ```{r}
-ct = ct %>% 
+new_ct = ct %>% 
   mutate( c_date = monthStart(created),
           u_date = monthStart(updated))
-by_create = count(ct, c_date)
-by_update = ct %>% group_by(u_date) %>% summarise(n = length(cell[samples > 1]))
+by_create = count(new_ct, c_date)
+by_update = new_ct %>% group_by(u_date) %>% summarise(n = length(cell[samples > 1]))
 ``` 
 
 ```{r CreatedUpdated, fig.height=10, fig.width=15, message=FALSE, warning=FALSE}
@@ -69,43 +69,43 @@ The month with the highest pick of new cell towers registered is March 2016, wit
 For each year from 2008 to 2016 all newly registered cell towers were plotted<sup>2</sup>, using the latitude and longitude points on the UK map. This reveals that cell towers are positioned along main transport routes across the UK as well as in major urban centres.
 
 ```{r}
-ct = ct %>% 
+new_ct = new_ct %>% 
   mutate( year = format(c_date, "%Y"))
 ```
 
 ```{r PlotYear2008, fig.height=10, fig.width=15, message=FALSE, warning=FALSE}
-plor_year(2008, ct)
+plor_year(2008, new_ct)
 ```
 ```{r PlotYear2009, fig.height=10, fig.width=15, message=FALSE, warning=FALSE}
-plor_year(2009, ct)
+plor_year(2009, new_ct)
 ```
 
 ```{r PlotYear2010, fig.height=10, fig.width=15, message=FALSE, warning=FALSE}
-plor_year(2010, ct)
+plor_year(2010, new_ct)
 ```
 
 ```{r PlotYear2011, fig.height=10, fig.width=15, message=FALSE, warning=FALSE}
-plor_year(2011, ct)
+plor_year(2011, new_ct)
 ```
 
 ```{r PlotYear2012, fig.height=10, fig.width=15, message=FALSE, warning=FALSE}
-plor_year(2012, ct)
+plor_year(2012, new_ct)
 ```
 
 ```{r PlotYear2013, fig.height=10, fig.width=15, message=FALSE, warning=FALSE}
-plor_year(2013, ct)
+plor_year(2013, new_ct)
 ```
 
 ```{r PlotYear2014, fig.height=10, fig.width=15, message=FALSE, warning=FALSE}
-plor_year(2014, ct)
+plor_year(2014, new_ct)
 ```
 
 ```{r PlotYear2015, fig.height=10, fig.width=15, message=FALSE, warning=FALSE}
-plor_year(2015, ct)
+plor_year(2015, new_ct)
 ```
 
 ```{r PlotYear2016, fig.height=10, fig.width=15, message=FALSE, warning=FALSE}
-plor_year(2016, ct)
+plor_year(2016, new_ct)
 ```
 
 In the 2015 and 2016 maps there are a small number of cell towers positioned at sea. These could represent cell towers close to the coast that are connected to on journeys across water. The GPS signal sent to OpenCellID will be that representing the mobile user’s exact position. Another possibility, is that ferries/ships started to have their own cell tower/antennae or that contributors to OpenCellID have just made an observation of these cell-towers.   
