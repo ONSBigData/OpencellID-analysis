@@ -1,6 +1,5 @@
 library(ggplot2)
 library(ggmap)
-library(mapproj)
 
 legend_theme = theme(legend.title = element_text(size=10, face="bold"))
 
