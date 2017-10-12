@@ -1,7 +1,7 @@
 ---
 title: "Part2: Kernel Density estimation"
 author: "Alessandra Sozzi"  
-date: "2017-10-05"
+date: "2017-10-12"
 output:  github_document
 ---
 
@@ -21,20 +21,20 @@ head(London_ct)
 ```
 
 ```
-##    cell radio mcc net      lon      lat range samples changeable
-## 1 53052   GSM 234  30 0.361382 51.30748  7046       6          1
-## 2  3121   GSM 234  30 0.352112 51.30560   749       2          1
-## 3 52088   GSM 234  30 0.303829 51.30282  4362       4          1
-## 4 31459   GSM 234  15 0.329631 51.30816 14987     182          1
-## 5 10191   GSM 234  15 0.172449 51.29284 17715     397          1
-## 6 20327   GSM 234  15 0.265889 51.30189 11009      75          1
-##      created    updated
-## 1 1311336248 1338353836
-## 2 1311336248 1311336248
-## 3 1311336248 1314561467
-## 4 1311336248 1458934876
-## 5 1311336248 1345639189
-## 6 1311336248 1276359333
+##    cell radio mcc net  lon lat range samples changeable    created
+## 1 53052   GSM 234  30 0.36  51  7046       6          1 1311336248
+## 2  3121   GSM 234  30 0.35  51   749       2          1 1311336248
+## 3 52088   GSM 234  30 0.30  51  4362       4          1 1311336248
+## 4 31459   GSM 234  15 0.33  51 14987     182          1 1311336248
+## 5 10191   GSM 234  15 0.17  51 17715     397          1 1311336248
+## 6 20327   GSM 234  15 0.27  51 11009      75          1 1311336248
+##      updated
+## 1 1338353836
+## 2 1311336248
+## 3 1314561467
+## 4 1458934876
+## 5 1345639189
+## 6 1276359333
 ```
 
 
@@ -47,9 +47,7 @@ Although Heathrow Terminals 2 & 3 have a high density of cell towers, it is of n
 draw_ggmap(location = "Heathrow Airport", zoom = 13, London_ct)
 ```
 
-```
-## Error in data.frame(ll.lat = ll[1], ll.lon = ll[2], ur.lat = ur[1], ur.lon = ur[2]): arguments imply differing number of rows: 0, 1
-```
+![plot of chunk HeathrowAirportKDE](figures//HeathrowAirportKDE-1.png)
 
 ### London’s main stations
 
@@ -57,6 +55,7 @@ This technique was also applied to areas of London containing the major mainline
 The next plots reveal the high density of cell towers positioned in some of London’s main stations.
 
 #### Waterloo Train Station
+
 
 ```r
 draw_ggmap(location = "Waterloo Train Station, London", 
@@ -67,6 +66,7 @@ draw_ggmap(location = "Waterloo Train Station, London",
 
 #### King's Cross Train Station
 
+
 ```r
 draw_ggmap(location = "King's Cross Train Station, London", zoom = 15, 
            London_ct, scale_color_lims = c(0, 7000))
@@ -75,6 +75,7 @@ draw_ggmap(location = "King's Cross Train Station, London", zoom = 15,
 ![plot of chunk KingsCrossTrainStationKDE](figures//KingsCrossTrainStationKDE-1.png)
 
 #### Liverpool Street Train Station
+
 
 ```r
 draw_ggmap(location = "Liverpool Street Train Station, London", zoom = 15, 
@@ -85,14 +86,13 @@ draw_ggmap(location = "Liverpool Street Train Station, London", zoom = 15,
 
 #### Victoria Train Station
 
+
 ```r
 draw_ggmap(location = "Victoria Train Station, London", zoom = 15, 
            London_ct, scale_color_lims = c(0, 7000))
 ```
 
-```
-## Error in data.frame(ll.lat = ll[1], ll.lon = ll[2], ur.lat = ur[1], ur.lon = ur[2]): arguments imply differing number of rows: 0, 1
-```
+![plot of chunk VictoriaTrainStationKDE](figures//VictoriaTrainStationKDE-1.png)
 
 ---
 
