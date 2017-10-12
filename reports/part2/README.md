@@ -1,7 +1,7 @@
 ---
 title: "Part2: Kernel Density estimation"
 author: "Alessandra Sozzi"  
-date: "2017-08-08"
+date: "2017-10-05"
 output:  github_document
 ---
 
@@ -47,7 +47,9 @@ Although Heathrow Terminals 2 & 3 have a high density of cell towers, it is of n
 draw_ggmap(location = "Heathrow Airport", zoom = 13, London_ct)
 ```
 
-![plot of chunk HeathrowAirportKDE](figures//HeathrowAirportKDE-1.png)
+```
+## Error in data.frame(ll.lat = ll[1], ll.lon = ll[2], ur.lat = ur[1], ur.lon = ur[2]): arguments imply differing number of rows: 0, 1
+```
 
 ### London’s main stations
 
@@ -88,7 +90,9 @@ draw_ggmap(location = "Victoria Train Station, London", zoom = 15,
            London_ct, scale_color_lims = c(0, 7000))
 ```
 
-![plot of chunk VictoriaTrainStationKDE](figures//VictoriaTrainStationKDE-1.png)
+```
+## Error in data.frame(ll.lat = ll[1], ll.lon = ll[2], ur.lat = ur[1], ur.lon = ur[2]): arguments imply differing number of rows: 0, 1
+```
 
 ---
 
