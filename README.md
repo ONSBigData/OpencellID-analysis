@@ -75,7 +75,7 @@ A detailed description of the data is presented in the table below. For more det
 
 
 ## Useful links
-Additional details regarding the analysis and the results of the study can be found at [!!!placeholder](link)
+Additional details regarding the analysis and the results of the study can be found [here](https://www.ons.gov.uk/methodology/methodologicalpublications/generalmethodology/onsworkingpaperseries/onsmethodologyworkingpaperseriesnumber13comparingthedensityofmobilephonecelltowerswithpopulationestimates)
 
 ## Contributors
 
