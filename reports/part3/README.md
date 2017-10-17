@@ -5,7 +5,7 @@ date: "2017-10-05"
 output:  github_document
 ---
 
-This notebook follows along the APPENDIX B produced for the publication *Comparing the density of mobile phone cell towers with population* part of the [ONS Methodology Working Paper Series]()
+This notebook follows along the APPENDIX B produced for the publication *Comparing the density of mobile phone cell towers with population* part of the [ONS Methodology Working Paper Series](https://www.ons.gov.uk/methodology/methodologicalpublications/generalmethodology/onsworkingpaperseries/onsmethodologyworkingpaperseriesnumber13comparingthedensityofmobilephonecelltowerswithpopulationestimates)
 
 The relationship between official estimates of UK residential and [workday population](https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/articles/theworkdaypopulationofenglandandwales/2013-10-31#data)<sup>1</sup> density and the density of mobile phone cell-towers is investigated using freely available and open-sourced data on cell-tower locations from [OpenCellID](https://opencellid.org/).
 
